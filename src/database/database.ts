@@ -29,11 +29,11 @@ export class PostgreHelper {
     await this.client.connect();
   }
 
-  async query(queryString: string): Promise<QueryResult<any>>{
+  async query(query: any): Promise<QueryResult<any>>{
     if(!this.client) {
       throw Error("Could not make query because PostgreHelper.client is null");
     };
-    return await this.client.query(queryString);
+    return await this.client.query(query);
   }
 
   async disconnect(){
