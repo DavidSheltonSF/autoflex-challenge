@@ -1,7 +1,7 @@
 import express, { type Request, type Response } from 'express';
 import { PostgreHelper } from './database/database';
 import cookieParser from 'cookie-parser';
-import { configRouter } from './routes/router';
+import { configRouter } from './routes/configRouter';
 
 export const app = express();
 app.use(express.json());
