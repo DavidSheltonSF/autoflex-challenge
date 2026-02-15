@@ -77,26 +77,41 @@ export function configProductsRoutes(router: Router) {
     };
 
     const result = await dbConnection.query(query);
+    const rows = result.rows;
+
+    if (rows.length === 0) {
+      return res.status(404).json({
+        message: `Product with id ${productId} was not found`,
+      });
+    }
 
     return res.status(200).json({
       message: 'UPDATED',
-      data: result.rows
+      data: rows[0],
     });
   });
 
   router.delete('/products/:id', async (req: Request, res: Response) => {
     const productId = req.params.id;
-    if(!productId){
+    if (!productId) {
       res.status(400).json({
-        message: "Missing product id"
-      })
+        message: 'Missing product id',
+      });
     }
 
+    const result = await dbConnection.query(
+      `DELETE FROM products WHERE id = ${productId} RETURNING *`
+    );
+    const rows = result.rows;
 
-    const result = await dbConnection.query(`DELETE FROM products WHERE id = ${productId} RETURNING *`);
+    if (rows.length === 0) {
+      return res.status(404).json({
+        message: `Product with id ${productId} was not found`,
+      });
+    }
     return res.status(200).json({
-      message: "DELETED",
-      data: result.rows,
+      message: 'DELETED',
+      data: rows[0],
     });
   });
 }
