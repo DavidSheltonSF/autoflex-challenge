@@ -44,8 +44,16 @@ export function configProductsRoutes(router: Router) {
     }
 
     const result = await dbConnection.query(`SELECT * FROM products WHERE id = ${productId}`);
+    const rows = result.rows;
+
+    if (rows.length === 0) {
+      return res.status(404).json({
+        message: `Product with id ${productId} was not found`,
+      });
+    }
+
     return res.status(200).json({
-      data: result.rows,
+      data: rows[0],
     });
   });
 
