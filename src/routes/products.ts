@@ -17,7 +17,7 @@ export function configProductsRoutes(router: Router) {
     }
 
     const query = {
-      text: `INSERT INTO product(code, name, price) VALUES($1, $2, $3) RETURNING *`,
+      text: `INSERT INTO products(code, name, price) VALUES($1, $2, $3) RETURNING *`,
       values: [code, name, price],
     };
     const result = await dbConnection.query(query);
@@ -29,7 +29,7 @@ export function configProductsRoutes(router: Router) {
   });
 
   router.get('/products', async (req: Request, res: Response) => {
-    const result = await dbConnection.query(`SELECT * FROM product`);
+    const result = await dbConnection.query(`SELECT * FROM products`);
     return res.status(200).json({
       data: result.rows,
     });
@@ -39,11 +39,11 @@ export function configProductsRoutes(router: Router) {
     const productId = req.params.id;
     if (!productId) {
       return res.status(400).json({
-        message: 'Missing product id',
+        message: 'Missing products id',
       });
     }
 
-    const result = await dbConnection.query(`SELECT * FROM product WHERE id = ${productId}`);
+    const result = await dbConnection.query(`SELECT * FROM products WHERE id = ${productId}`);
     return res.status(200).json({
       data: result.rows,
     });
@@ -54,7 +54,7 @@ export function configProductsRoutes(router: Router) {
 
     if (!productId) {
       return res.status(400).json({
-        message: 'Missing product id',
+        message: 'Missing products id',
       });
     }
 
@@ -72,7 +72,7 @@ export function configProductsRoutes(router: Router) {
     }
 
     const query = {
-      text: `UPDATE product SET code =  $1, name = $2, price = $3 WHERE id = ${productId}`,
+      text: `UPDATE products SET code =  $1, name = $2, price = $3 WHERE id = ${productId}`,
       values: [code, name, price],
     };
 
@@ -92,7 +92,7 @@ export function configProductsRoutes(router: Router) {
     }
 
 
-    const result = await dbConnection.query(`DELETE FROM product WHERE id = ${productId} RETURNING *`);
+    const result = await dbConnection.query(`DELETE FROM products WHERE id = ${productId} RETURNING *`);
     return res.status(200).json({
       message: "DELETED",
       data: result.rows,
