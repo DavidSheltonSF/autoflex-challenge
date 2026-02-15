@@ -1,7 +1,7 @@
-import {Router, type Request, type Response } from "express";
-import { dbConnection } from "..";
+import { Router, type Request, type Response } from 'express';
+import { dbConnection } from '..';
 
-export function configProductsRoutes(router: Router){
+export function configProductsRoutes(router: Router) {
   router.post('/products', async (req: Request, res: Response) => {
     if (!req.body) {
       return res.status(400).json({
@@ -25,6 +25,13 @@ export function configProductsRoutes(router: Router){
 
     return res.status(201).json({
       data: result.rows[0],
+    });
+  });
+
+  router.get('/products', async (req: Request, res: Response) => {
+    const result = await dbConnection.query(`SELECT * FROM product`);
+    return res.status(200).json({
+      data: result.rows,
     });
   });
 
@@ -59,6 +66,22 @@ export function configProductsRoutes(router: Router){
 
     return res.status(200).json({
       message: 'updated',
+    });
+  });
+
+  router.delete('/products/:id', async (req: Request, res: Response) => {
+    const productId = req.params.id;
+    if(!productId){
+      res.status(400).json({
+        message: "Missing product id"
+      })
+    }
+
+
+    const result = await dbConnection.query(`DELETE FROM product WHERE id = ${productId} RETURNING *`);
+    return res.status(200).json({
+      message: "DELETED",
+      data: result.rows,
     });
   });
 }
