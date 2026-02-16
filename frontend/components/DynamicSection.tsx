@@ -10,7 +10,7 @@ export function DynamicSection({ index, selectedSection, title, children }: Prop
   return (
     isSelected && (
       <div className="flex flex-col size-full">
-        <h1 className="text-xl font-bold my-[16px]">{title}</h1>
+        <h1 className="text-3xl font-bold my-[16px]">{title}</h1>
         <div>
           {children}
         </div>
