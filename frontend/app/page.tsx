@@ -1,3 +1,4 @@
+import { CommoditiesSection } from "@/components/CommoditiesSection";
 import { DynamicSections } from "@/components/DynamicSections";
 import { ProductsSection } from "@/components/ProductsSection";
 
@@ -11,7 +12,7 @@ export default function Home() {
             <ProductsSection/>
           </div>
          <div>
-            <p>material</p>
+            <CommoditiesSection/>
           </div>
         </DynamicSections>
        </div>
