@@ -9,11 +9,9 @@ export function DynamicSection({ index, selectedSection, title, children }: Prop
   const isSelected = index === selectedSection;
   return (
     isSelected && (
-      <div className="flex flex-col size-full">
+      <div className="flex flex-col size-full fade-in-animation">
         <h1 className="text-3xl font-bold my-[16px]">{title}</h1>
-        <div>
-          {children}
-        </div>
+        <div>{children}</div>
       </div>
     )
   );
