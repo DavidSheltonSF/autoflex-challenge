@@ -1,5 +1,5 @@
-import { products } from "@/fakeData/products";
-import { ProductsList } from "../ProductsList";
+import { products } from '@/fakeData/products';
+import { ProductsList } from '../ProductsList';
 
 export function ProductsSection() {
   return (
@@ -9,7 +9,8 @@ export function ProductsSection() {
           <input className="w-full px-[8px]" type="text" placeholder="Search for a product..." />
         </div>
       </div>
-      <ProductsList products={products}/>
+
+      <ProductsList products={products} />
     </div>
   );
 }
