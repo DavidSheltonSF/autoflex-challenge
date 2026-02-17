@@ -44,7 +44,9 @@ export function ProductsList({ products, isLoading }: Props) {
         }}
       />
       <AddProductModal />
-      <div>{isLoading ? renderSkeleton() : renderProducts}</div>
+      <div className="flex flex-col gap-[24px]">
+        {isLoading ? renderSkeleton() : renderProducts}
+      </div>
     </div>
   );
 }
