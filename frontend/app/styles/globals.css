@@ -1,8 +1,9 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 :root {
   --color-white: #f8f8f8;
   --color-black: #171717;
+  --color-primary: rgb(78, 78, 209);
 }
 
 input:focus {
@@ -15,11 +16,18 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-
 .bg-color-white {
   background-color: var(--color-white);
 }
 
 .bg-color-black {
   background-color: var(--color-black);
+}
+
+.bg-color-primary {
+  background-color: var(--color-primary);
+}
+
+.text-color-white {
+  color: var(--color-white);
 }
