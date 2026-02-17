@@ -2,7 +2,7 @@
 import { addProduct } from '@/actions/addProduct';
 import { BaseModal } from './BaseModal';
 import { useContext, useEffect, useState } from 'react';
-import { FormState } from '@/types/FormState';
+import { FechingState } from '@/types/FechingState';
 import { AddProductModalContext } from '@/contexts/AddProductModalContext';
 
 export function AddProductModal() {
