@@ -1,5 +1,5 @@
 import { products } from "@/fakeData/products";
-import { ProductsList } from "./ProductsList";
+import { ProductsList } from "../ProductsList";
 
 export function ProductsSection() {
   return (

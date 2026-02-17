@@ -1,5 +1,5 @@
-import { CommoditiesList } from "./CommoditiesList";
-import { commodities } from "@/fakeData/commodities";
+import { CommoditiesList } from '../CommoditiesList';
+import { commodities } from '@/fakeData/commodities';
 
 export function CommoditiesSection() {
   return (
@@ -9,7 +9,7 @@ export function CommoditiesSection() {
           <input className="w-full px-[8px]" type="text" placeholder="Search for a commodity..." />
         </div>
       </div>
-      <CommoditiesList commodities={commodities}/>
+      <CommoditiesList commodities={commodities} />
     </div>
   );
 }
