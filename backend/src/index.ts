@@ -7,7 +7,7 @@ export const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(configRouter());
-const port = 3001;
+const port = 3002;
 export const dbConnection = PostgreHelper.getInstance();
 
 (async () => {
