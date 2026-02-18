@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './styles/globals.css';
 import './styles/animations.css';
-import { ModalsProvider } from '@/contexts/ModalsProvider';
+import { ProductModalsProvider } from '@/contexts/ProductModalsProvider';
 import { UpdateProductModal } from '@/components/modals/UpdateProductModal';
 import { DeleteProductModal } from '@/components/modals/DeleteProductModal';
 
@@ -29,11 +29,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <ModalsProvider>
+        <ProductModalsProvider>
           <UpdateProductModal />
           <DeleteProductModal />
           <div>{children}</div>
-        </ModalsProvider>
+        </ProductModalsProvider>
       </body>
     </html>
   );

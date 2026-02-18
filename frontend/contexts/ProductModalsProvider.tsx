@@ -8,7 +8,7 @@ interface Props {
   children: ReactNode;
 }
 
-export function ModalsProvider({ children }: Props) {
+export function ProductModalsProvider({ children }: Props) {
   const [addProductModalIsOpen, setAddProductModalIsOpen] = useState(false);
   const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
   const [productIdToDelete, setPRoductIdToDelete] = useState<string | null>(null);
