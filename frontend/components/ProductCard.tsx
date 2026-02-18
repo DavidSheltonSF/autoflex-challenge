@@ -40,15 +40,6 @@ export function ProductCard({ id, code, name, price, quantity }: Props) {
           >
             <TrashIcon width="32px" height="32px" />
           </button>
-          <button
-            className="cursor-pointer"
-            onClick={() => {
-              setProductIdToDelete(id);
-              setDeleteModalIsOpen(true);
-            }}
-          >
-            <TrashIcon width="32px" height="32px" />
-          </button>
         </div>
       </header>
       <div className="flex flex-col gap-[8px] text-lg">
