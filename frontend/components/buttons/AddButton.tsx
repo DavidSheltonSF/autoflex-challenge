@@ -1,5 +1,5 @@
 'use client';
-import { PlusIcon } from './icons/PlusIcon';
+import { PlusIcon } from '../icons/PlusIcon';
 
 interface Props {
   label: string;

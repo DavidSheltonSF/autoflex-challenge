@@ -2,7 +2,7 @@
 import { useContext, useState } from 'react';
 import { BaseModal } from './BaseModal';
 import { DeleteProductModalContext } from '@/contexts/DeleteProductModalContext';
-import { Button } from '../Button';
+import { Button } from '../buttons/Button';
 import { fetchDeleteProductById } from '@/services/fetchDeleteProductById';
 import { FechingState } from '@/types/FechingState';
 import { RequestStatus } from '@/types/RequestStatus';
@@ -14,14 +14,14 @@ export function DeleteProductModal() {
     throw Error('Missing AddProductModalContext');
   }
   const { modalState, setModalState } = context;
-  const {isOpen, entityId} = modalState
+  const { isOpen, entityId } = modalState;
 
   const isLoading = feching?.status === RequestStatus.loading ? true : false;
 
   async function handleDeleteProduct() {
     try {
       setFeching({ status: RequestStatus.loading });
-      await fetchDeleteProductById(entityId || "");
+      await fetchDeleteProductById(entityId || '');
       setFeching({ status: RequestStatus.ok, message: `Product deleted successfuly` });
     } catch (error) {
       console.log(error);

@@ -2,7 +2,7 @@
 import { useContext, useState } from 'react';
 import { BaseModal } from './BaseModal';
 import { DeleteCommodityModalContext } from '@/contexts/commodities/DeleteCommodityModalContext';
-import { Button } from '../Button';
+import { Button } from '../buttons/Button';
 import { fetchDeleteCommodity } from '@/services/fetchDeleteCommodity';
 import { FechingState } from '@/types/FechingState';
 import { RequestStatus } from '@/types/RequestStatus';
@@ -14,14 +14,14 @@ export function DeleteCommodityModal() {
     throw Error('Missing AddCommodityModalContext');
   }
   const { modalState, setModalState } = context;
-  const {isOpen, entityId} = modalState
+  const { isOpen, entityId } = modalState;
 
   const isLoading = feching?.status === RequestStatus.loading ? true : false;
 
   async function handleDeleteCommodity() {
     try {
       setFeching({ status: RequestStatus.loading });
-      await fetchDeleteCommodity(entityId || "");
+      await fetchDeleteCommodity(entityId || '');
       setFeching({ status: RequestStatus.ok, message: `Commodity deleted successfuly` });
     } catch (error) {
       console.log(error);
