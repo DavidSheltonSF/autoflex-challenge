@@ -10,7 +10,7 @@ interface Props {
 export function ModalsProvider({ children }: Props) {
   const [addProductModalIsOpen, setAddProductModalIsOpen] = useState(false);
   const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
-  const [productIdToDelete, setPRoductIdToDelete] = useState<number | null>(null);
+  const [productIdToDelete, setPRoductIdToDelete] = useState<string | null>(null);
 
   return (
     <DeleteProductModalContext

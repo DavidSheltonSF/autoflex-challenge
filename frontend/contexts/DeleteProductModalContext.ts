@@ -3,8 +3,8 @@ import { ModalContext } from './ModalContext';
 
 export const DeleteProductModalContext = createContext<
   | (ModalContext & {
-      productId: number | null;
-      setProductId: Dispatch<SetStateAction<number | null>>;
+      productId: string | null;
+      setProductId: Dispatch<SetStateAction<string | null>>;
     })
   | null
 >(null);
