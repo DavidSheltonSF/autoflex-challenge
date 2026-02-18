@@ -1,7 +1,7 @@
 import { EditIcon } from './icons/EditIcon';
 import { TrashIcon } from './icons/TrashIcon';
 
-export function ProductCardSkelton() {
+export function CardSkeleton() {
   return (
     <article className="flex flex-col gap-[16px] w-full min-lg:w-[400px] wbg-white border border-black/80 p-[16px] rounded-lg">
       <header className="flex justify-between">

@@ -4,7 +4,7 @@ import { ProductCard } from './ProductCard';
 import { AddButton } from './AddButton';
 import { useContext } from 'react';
 import { AddProductModal } from './modals/AddProductModal';
-import { ProductCardSkelton } from './ProductCardSkeleton';
+import { CardSkeleton } from './CardSkeleton';
 import { AddProductModalContext } from '@/contexts/AddProductModalContext';
 import { WithId } from '@/types/WithId';
 
@@ -22,7 +22,7 @@ export function ProductsList({ products, isLoading }: Props) {
     const skeletons = [];
 
     for (let i = 0; i < 4; i++) {
-      skeletons.push(<ProductCardSkelton key={i} />);
+      skeletons.push(<CardSkeleton key={i} />);
     }
 
     return skeletons;
