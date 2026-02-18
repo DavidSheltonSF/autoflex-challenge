@@ -1,9 +1,9 @@
 'use client';
 import { Product } from '@/types/Product';
-import { ProductCard } from './ProductCard';
+import { ProductCard } from './cards/ProductCard';
 import { AddButton } from './AddButton';
 import { useContext } from 'react';
-import { CardSkeleton } from './CardSkeleton';
+import { CardSkeleton } from './cards/CardSkeleton';
 import { AddProductModalContext } from '@/contexts/AddProductModalContext';
 import { WithId } from '@/types/WithId';
 

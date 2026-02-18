@@ -1,26 +1,26 @@
-import { EditIcon } from './icons/EditIcon';
-import { TrashIcon } from './icons/TrashIcon';
-import { LabelValue } from './LabelValue';
+import { EditIcon } from '../icons/EditIcon';
+import { TrashIcon } from '../icons/TrashIcon';
+import { LabelValue } from '../LabelValue';
 import { useContext } from 'react';
-import { DeleteCommodityModalContext } from '@/contexts/commodities/DeleteCommodityModalContext';
-import { UpdateCommodityModalContext } from '@/contexts/commodities/UpdateCommodityModalContext';
+import { DeleteProductModalContext } from '@/contexts/DeleteProductModalContext';
+import { UpdateProductModalContext } from '@/contexts/UpdateProductModalContext';
 
 interface Props {
   id: string;
   code: string;
   name: string;
-  quantity: number;
+  price: number;
 }
 
-export function CommodityCard({ id, code, name, quantity }: Props) {
-  const deleteModalContext = useContext(DeleteCommodityModalContext);
+export function ProductCard({ id, code, name, price }: Props) {
+  const deleteModalContext = useContext(DeleteProductModalContext);
   if (!deleteModalContext) {
-    throw Error('Missing AddCommodityModalContext');
+    throw Error('Missing AddProductModalContext');
   }
 
-  const updateModalContext = useContext(UpdateCommodityModalContext);
+  const updateModalContext = useContext(UpdateProductModalContext);
   if (!updateModalContext) {
-    throw Error('Missing UpdateCommodityModalContext');
+    throw Error('Missing UpdateProductModalContext');
   }
 
   const setDeleteModalState = deleteModalContext.setModalState;
@@ -51,7 +51,7 @@ export function CommodityCard({ id, code, name, quantity }: Props) {
       </header>
       <div className="flex flex-col gap-[8px] text-lg">
         <LabelValue label="code" value={code} />
-        <LabelValue label="quantity" value={quantity} />
+        <LabelValue label="price" value={price} />
         <div className="flex flex-col gap-[8px] min-lg:flex-row justify-between"></div>
       </div>
     </article>

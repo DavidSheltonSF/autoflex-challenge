@@ -1,5 +1,5 @@
-import { EditIcon } from './icons/EditIcon';
-import { TrashIcon } from './icons/TrashIcon';
+import { EditIcon } from '../icons/EditIcon';
+import { TrashIcon } from '../icons/TrashIcon';
 
 export function CardSkeleton() {
   return (

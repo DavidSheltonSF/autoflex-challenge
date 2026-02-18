@@ -1,9 +1,9 @@
 'use client';
 import { Commodity } from '@/types/Commodity';
-import { CommodityCard } from './CommodityCard';
+import { CommodityCard } from './cards/CommodityCard';
 import { AddButton } from './AddButton';
 import { useContext } from 'react';
-import { CardSkeleton } from './CardSkeleton';
+import { CardSkeleton } from './cards/CardSkeleton';
 import { AddCommodityModalContext } from '@/contexts/commodities/AddCommodityModalContext';
 import { WithId } from '@/types/WithId';
 
