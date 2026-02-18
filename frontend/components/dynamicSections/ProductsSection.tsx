@@ -6,9 +6,10 @@ import { fetchProducts } from '@/services/fetchProducts';
 import { Product } from '@/types/Product';
 import { FechingState } from '@/types/FechingState';
 import { RequestStatus } from '@/types/RequestStatus';
+import { WithId } from '@/types/WithId';
 
 export function ProductsSection() {
-  const [fetching, setFeching] = useState<FechingState<Product[]>>({
+  const [fetching, setFeching] = useState<FechingState<WithId<Product>[]>>({
     status: RequestStatus.loading,
     data: [],
   });
