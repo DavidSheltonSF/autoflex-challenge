@@ -2,9 +2,10 @@ import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './styles/globals.css';
 import './styles/animations.css';
-import { ProductModalsProvider } from '@/contexts/ProductModalsProvider';
 import { UpdateProductModal } from '@/components/modals/UpdateProductModal';
 import { DeleteProductModal } from '@/components/modals/DeleteProductModal';
+import { AddCommodityModal } from '@/components/modals/AddCommodityModal';
+import { ModalsProvider } from '@/contexts/ModalsProvider';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -29,11 +30,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <ProductModalsProvider>
+        <ModalsProvider>
           <UpdateProductModal />
           <DeleteProductModal />
+          <AddCommodityModal />
           <div>{children}</div>
-        </ProductModalsProvider>
+        </ModalsProvider>
       </body>
     </html>
   );
