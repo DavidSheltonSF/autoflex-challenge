@@ -3,7 +3,7 @@ import { Product } from '@/types/Product';
 interface Props {
   formAction: (formData: FormData) => void | Promise<void>;
   buttonLabel: string;
-  data?: Product;
+  data?: Product | null;
 }
 
 export function ProductForm({ formAction, buttonLabel, data }: Props) {
