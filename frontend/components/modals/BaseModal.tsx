@@ -20,7 +20,7 @@ export function BaseModal({ close, children, additionalStyles }: Props) {
   return (
     <div
       ref={modalRef}
-      className={`flex flex-col fixed top-[10%] left-[50%] translate-x-[-50%] bg-color-white shadow-[0_0_1px_black] rounded-lg fade-in-animation ${additionalStyles}`}
+      className={`flex flex-col fixed top-[10%] left-[50%] translate-x-[-50%] bg-color-white shadow-[0_0_3px_black] rounded-lg fade-in-animation ${additionalStyles}`}
     >
       <div className="flex justify-end items-center p-[8px] border-b">
         <button
