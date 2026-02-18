@@ -83,7 +83,7 @@ export function UpdateProductModal() {
           <ProductForm
             data={fetchProductState?.data}
             formAction={handleSubmit}
-            buttonLabel="Add Product"
+            buttonLabel="Edit Product"
           />
         </div>
       </BaseModal>
