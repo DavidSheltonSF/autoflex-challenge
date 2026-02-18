@@ -3,7 +3,7 @@ export async function fetchUpdateCommodity(id: string, formData: FormData) {
   const name = formData.get('name');
   const quantity = formData.get('quantity');
 
-  const response = await fetch(`http://localhost:3002/commodity/${id}`, {
+  const response = await fetch(`http://localhost:3002/commodities/${id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
