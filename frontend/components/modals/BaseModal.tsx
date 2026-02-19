@@ -1,4 +1,4 @@
-import { ReactNode, useRef } from 'react';
+import { ReactNode, useEffect, useRef } from 'react';
 import { CloseIcon } from '../icons/CloseIcon';
 import { LoadingIcon } from '../icons/LoadingIcon';
 
@@ -11,6 +11,20 @@ interface Props {
 
 export function BaseModal({ close, children, additionalStyles, isLoading }: Props) {
   const modalRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOut(e: MouseEvent) {
+      if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
+        handleCloseModal();
+      }
+    }
+
+    document.addEventListener('click', handleClickOut);
+
+    return () => {
+      document.removeEventListener('click', handleClickOut);
+    };
+  }, []);
 
   function handleCloseModal() {
     modalRef.current?.classList.add('fade-out-animation');
