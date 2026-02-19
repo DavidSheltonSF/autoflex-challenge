@@ -137,4 +137,56 @@ export function configProductsRoutes(router: Router) {
       data: rows[0],
     });
   });
+
+  router.delete(
+    '/products/:productId/commodities/:commodityId',
+    async (req: Request, res: Response) => {
+      const productId = req.params.productId;
+      const commodityId = req.params.commodityId;
+
+      if (!productId) {
+        return res.status(400).json({
+          message: 'Missing products id',
+        });
+      }
+      if (!commodityId) {
+        return res.status(400).json({
+          message: 'Missing commodity id',
+        });
+      }
+
+      const productQuery = await dbConnection.query(
+        `SELECT name FROM products WHERE id = ${productId}`
+      );
+      if (productQuery.rows.length === 0) {
+        return res.status(404).json({
+          message: `Product with id ${productId} was not found`,
+        });
+      }
+
+      const productCommodity = await dbConnection.query(
+        `SELECT id FROM products_commodities pc WHERE  pc.productid = ${productId} AND pc.commodityid = ${commodityId}`
+      );
+      if (productCommodity.rows.length === 0) {
+        return res.status(404).json({
+          message: `Product commodity was not was not found`,
+        });
+      }
+
+      const result = await dbConnection.query(
+        `DELETE FROM products_commodities pc WHERE pc.productId = ${productId} AND pc.commodityId = ${commodityId} RETURNING *`
+      );
+      const rows = result.rows;
+
+      if (rows.length === 0) {
+        return res.status(500).json({
+          message: `Something went wrong and nothing was deleted`,
+        });
+      }
+
+      return res.status(200).json({
+        message: 'DELETED',
+      });
+    }
+  );
 }
