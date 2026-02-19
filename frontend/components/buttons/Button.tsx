@@ -21,7 +21,7 @@ export function Button(props: Props) {
   return (
     <button
       onClick={onClick}
-      className="bg-gray-300 text-black  rounded-md hover:brightness-130 cursor-pointer"
+      className="bg-gray-300 text-black border rounded-md hover:brightness-130 cursor-pointer"
       style={{
         height,
         width,
