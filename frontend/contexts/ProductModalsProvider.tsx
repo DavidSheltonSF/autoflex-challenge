@@ -4,6 +4,7 @@ import { AddProductModalContext } from './AddProductModalContext';
 import { DeleteProductModalContext } from './DeleteProductModalContext';
 import { UpdateProductModalContext } from './UpdateProductModalContext';
 import { ModalState } from '@/types/ModalState';
+import { ProductModalContext } from './ProductModalContext';
 
 interface Props {
   children: ReactNode;
@@ -17,25 +18,33 @@ export function ProductModalsProvider({ children }: Props) {
   const [updateModalState, setUpdateModalState] = useState<ModalState>({
     isOpen: false,
   });
+
+  const [productModalState, setProductModalState] = useState<ModalState>({
+    isOpen: false,
+  });
   return (
-    <UpdateProductModalContext
-      value={{
-        modalState: updateModalState,
-        setModalState: setUpdateModalState,
-      }}
+    <ProductModalContext
+      value={{ modalState: productModalState, setModalState: setProductModalState }}
     >
-      <DeleteProductModalContext
+      <UpdateProductModalContext
         value={{
-          modalState: deleteModalState,
-          setModalState: setDeleteModalState,
+          modalState: updateModalState,
+          setModalState: setUpdateModalState,
         }}
       >
-        <AddProductModalContext
-          value={{ modalState: addModalState, setModalState: setAddModalState }}
+        <DeleteProductModalContext
+          value={{
+            modalState: deleteModalState,
+            setModalState: setDeleteModalState,
+          }}
         >
-          {children}
-        </AddProductModalContext>
-      </DeleteProductModalContext>
-    </UpdateProductModalContext>
+          <AddProductModalContext
+            value={{ modalState: addModalState, setModalState: setAddModalState }}
+          >
+            {children}
+          </AddProductModalContext>
+        </DeleteProductModalContext>
+      </UpdateProductModalContext>
+    </ProductModalContext>
   );
 }
