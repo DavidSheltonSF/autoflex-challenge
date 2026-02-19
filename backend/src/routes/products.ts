@@ -28,6 +28,47 @@ export function configProductsRoutes(router: Router) {
     });
   });
 
+  router.post('/products/:id/commodities', async (req: Request, res: Response) => {
+    const productId = req.params.id;
+    if (!productId) {
+      return res.status(400).json({
+        message: 'Missing products id',
+      });
+    }
+
+    if (!req.body) {
+      return res.status(400).json({
+        message: 'Missing request body',
+      });
+    }
+
+    const { commodityId, quantity } = req.body;
+    if (!commodityId || !quantity) {
+      return res.status(400).json({
+        message: 'Missing required fields',
+      });
+    }
+
+    const productQuery = await dbConnection.query(
+      `SELECT name FROM products WHERE id = ${productId}`
+    );
+    if (productQuery.rows.length === 0) {
+      return res.status(404).json({
+        message: `Product with id ${productId} was not found`,
+      });
+    }
+
+    const query = {
+      text: `INSERT INTO products_commodities(productid, commodityid, quantity) VALUES($1, $2, $3) RETURNING *`,
+      values: [productId, commodityId, quantity],
+    };
+    const result = await dbConnection.query(query);
+
+    return res.status(201).json({
+      data: result.rows[0],
+    });
+  });
+
   router.get('/products', async (req: Request, res: Response) => {
     const result = await dbConnection.query(`SELECT * FROM products`);
     return res.status(200).json({
