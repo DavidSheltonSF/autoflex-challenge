@@ -35,6 +35,21 @@ export function configProductsRoutes(router: Router) {
     });
   });
 
+  router.get('/products/:id/commodities', async (req: Request, res: Response) => {
+    const productId = req.params.id;
+    if (!productId) {
+      return res.status(400).json({
+        message: 'Missing products id',
+      });
+    }
+    const result = await dbConnection.query(
+      `SELECT c.id, c.code, c.name, pc.quantity FROM products p INNER JOIN products_commodities pc ON p.id = pc.productid INNER JOIN commodities c ON c.id = pc.commodityid WHERE p.id = ${productId}`
+    );
+    return res.status(200).json({
+      data: result.rows,
+    });
+  });
+
   router.get('/products/:id', async (req: Request, res: Response) => {
     const productId = req.params.id;
     if (!productId) {
