@@ -49,7 +49,7 @@ export function CommodityCard({ id, code, name, quantity }: Props) {
           </button>
         </div>
       </header>
-      <div className="flex flex-col gap-[8px] text-lg p-[16px] cursor-pointer size-full">
+      <div className="flex flex-col gap-[8px] text-lg p-[16px] size-full">
         <LabelValue label="code" value={code} />
         <LabelValue label="quantity" value={quantity} />
         <div className="flex flex-col gap-[8px] min-lg:flex-row justify-between"></div>
