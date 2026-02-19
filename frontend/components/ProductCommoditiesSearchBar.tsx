@@ -1,7 +1,14 @@
 import { fetchCommodities } from '@/services/fetchCommodities';
 import { Commodity } from '@/types/Commodity';
 import { WithId } from '@/types/WithId';
-import { Dispatch, SetStateAction, useContext, useEffect, useRef, useState } from 'react';
+import {
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 
 interface Props {
   setCommodityId: Dispatch<SetStateAction<string | null>>;
@@ -12,7 +19,7 @@ export function ProductCommoditiesSearchBar({ setCommodityId }: Props) {
   const [searchContainerIsOpen, setSearchContainerIsOpen] = useState(false);
   const [commodities, setCommodities] = useState<WithId<Commodity>[]>([]);
   const searchBarRef = useRef<HTMLInputElement>(null);
-  const searchContainerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     async function loadCommodities() {
@@ -25,7 +32,19 @@ export function ProductCommoditiesSearchBar({ setCommodityId }: Props) {
       }
     }
 
+    function handleClickOut(e: MouseEvent) {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)){
+        setSearchContainerIsOpen(false);
+      }
+    }
+
+    document.addEventListener('click', handleClickOut);
+
     loadCommodities();
+
+    return () => {
+      document.removeEventListener('click', handleClickOut);
+    };
   }, [searchText]);
 
   const renderCommodities = commodities.map((commodity, index) => {
@@ -45,7 +64,7 @@ export function ProductCommoditiesSearchBar({ setCommodityId }: Props) {
     );
   });
   return (
-    <div className="relative h-[30px] w-[60%]">
+    <div ref={containerRef} className="relative h-[30px] w-[60%]">
       <input
         ref={searchBarRef}
         onChange={(e) => setSearchText(e.target.value)}
@@ -54,7 +73,6 @@ export function ProductCommoditiesSearchBar({ setCommodityId }: Props) {
         type="text"
       />
       <div
-        ref={searchContainerRef}
         className={`absolute bg-color-white top-full right-0 w-full rounded-md overflow-hidden ${
           searchContainerIsOpen ? 'h-auto' : 'h-0'
         }`}
