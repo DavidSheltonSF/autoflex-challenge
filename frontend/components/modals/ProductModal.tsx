@@ -59,6 +59,7 @@ export function ProductModal() {
   }, [isOpen, rerender]);
 
   const productIsLoading = fetchProductState?.status === RequestStatus.loading;
+  const product = fetchProductState?.data?.product;
 
   return (
     isOpen && (
@@ -68,13 +69,12 @@ export function ProductModal() {
         additionalStyles="h-auto w-[80vw] min-lg:w-[400px]"
       >
         <div className="flex flex-col gap-[24px] justify-center size-full">
-          <h1 className="text-2xl">Product Name</h1>
+          <h1 className="text-2xl">{product?.name}</h1>
           <div className="flex flex-col gap-[16px] text-lg">
-            <LabelValue label="code" value="dsfsda" />
-            <LabelValue label="price" value="300" />
+            <LabelValue label="code" value={product?.code} />
+            <LabelValue label="price" value={product?.price} />
           </div>
           <div className="flex flex-col gap-[16px]">
-            <h1 className="text-2xl">Commodities</h1>
             <ProductCommoditiesList
               setRerender={setRerender}
               commodities={fetchProductState?.data?.commodities || []}
