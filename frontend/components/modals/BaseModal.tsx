@@ -15,7 +15,7 @@ export function BaseModal({ close, children, additionalStyles, isLoading }: Prop
   useEffect(() => {
     function handleClickOut(e: MouseEvent) {
       if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
-        handleCloseModal();
+        closeModal();
       }
     }
 
@@ -26,7 +26,7 @@ export function BaseModal({ close, children, additionalStyles, isLoading }: Prop
     };
   }, []);
 
-  function handleCloseModal() {
+  function closeModal() {
     modalRef.current?.classList.add('fade-out-animation');
     setTimeout(() => {
       close();
@@ -41,7 +41,7 @@ export function BaseModal({ close, children, additionalStyles, isLoading }: Prop
       <div className="flex justify-end items-center p-[8px] border-b bg-color-primary">
         <button
           className="rounded-sm hover:bg-[var(--color-white)]/30 transition-[background] duration-300 cursor-pointer"
-          onClick={handleCloseModal}
+          onClick={closeModal}
         >
           <CloseIcon width="32px" height="32px" color="var(--color-white)" />
         </button>
