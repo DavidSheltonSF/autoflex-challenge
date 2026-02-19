@@ -7,6 +7,7 @@ import { fetchAddProductCommodity } from '@/services/fetchAddProductCommodity';
 import { ProductModalContext } from '@/contexts/ProductModalContext';
 import { ProductCommoditiesSearchBar } from '../ProductCommoditiesSearchBar';
 import { Button } from '../buttons/Button';
+import { Input } from '../Input';
 
 interface Props {
   commodities: WithId<Commodity>[];
@@ -43,14 +44,9 @@ export function ProductCommoditiesList({ commodities, setRerender }: Props) {
         <h1 className="text-2xl">Commodities</h1>
         <div className="flex gap-[8px]">
           <ProductCommoditiesSearchBar setCommodityId={setCommodityId} />
-          <input
-            className="border rounded-md w-[160px] px-[8px]"
-            type="number"
-            placeholder="quantity"
-            defaultValue={quantity}
-            onChange={(e) => setQuantity(e.target.value)}
-          />
-          <Button label="Add" height="auto" onClick={addCommodity} />
+
+          <Input type="number" placeholder='quantity' defaultValue={quantity} onChange={(e) => setQuantity(e.target.value)}/>
+          <Button backgroundColor='var(--color-white)' label="Add" height="auto" onClick={addCommodity} />
         </div>
       </div>
 
