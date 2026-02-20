@@ -46,4 +46,34 @@ export class PostgreHelper {
     await this.client.end();
     this.client = null;
   }
+
+  async resetTables(){
+    await this.query(`
+      DROP TABLE IF EXISTS products_commodities;
+      DROP TABLE IF EXISTS products;
+      DROP TABLE IF EXISTS commodities;
+
+      CREATE TABLE products (
+      id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+      code VARCHAR(8),
+      name VARCHAR(80),
+      price REAL
+      );
+
+      CREATE TABLE commodities (
+      id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+      code VARCHAR(8),
+      name VARCHAR(80),
+      quantity integer
+      );
+      
+      CREATE TABLE products_commodities (
+      id BIGINT GENERATED ALWAYS AS IDENTITY,
+      productid BIGINT REFERENCES products (id) ON DELETE CASCADE,
+      commodityid BIGINT REFERENCES commodities (id) ON DELETE CASCADE,
+      quantity integer
+      );
+      
+      `);
+  }
 }
