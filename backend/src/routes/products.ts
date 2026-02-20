@@ -1,7 +1,37 @@
 import { Router, type Request, type Response } from 'express';
 import { dbConnection } from '..';
+import { getViableProducts } from '../helpers/getViableProducts';
 
 export function configProductsRoutes(router: Router) {
+  router.get('/availableProducts', async (req: Request, res: Response) => {
+    const query = `
+  SELECT p.id, p.name, p.price, pc.quantity as commodityQuantity, c.name as commodityName, c.quantity as availableCommodityQuantity
+  FROM products p
+  INNER JOIN products_commodities pc ON p.id = pc.productid
+  INNER JOIN commodities c ON c.id = pc.commodityid
+   `;
+    const result = await dbConnection.query(query);
+    const rows = result.rows;
+    let groupedRowsByProductIdObj: Record<string, any[]> = {};
+    rows.forEach((row) => {
+      console.log(row);
+      if (groupedRowsByProductIdObj[row.id] === undefined) {
+        groupedRowsByProductIdObj[row.id] = [];
+      }
+      groupedRowsByProductIdObj[row.id]?.push(row);
+    });
+
+    const groupedRowsByProductId = Object.values(groupedRowsByProductIdObj);
+    console.log(groupedRowsByProductId)
+
+    const viableProducts = getViableProducts(groupedRowsByProductId);
+    console.log(viableProducts)
+
+    return res.status(200).json({
+      data: viableProducts,
+    });
+  });
+
   router.post('/products', async (req: Request, res: Response) => {
     if (!req.body) {
       return res.status(400).json({
