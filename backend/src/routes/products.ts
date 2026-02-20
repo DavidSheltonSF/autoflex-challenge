@@ -14,7 +14,6 @@ export function configProductsRoutes(router: Router) {
     const rows = result.rows;
     let groupedRowsByProductIdObj: Record<string, any[]> = {};
     rows.forEach((row) => {
-      console.log(row);
       if (groupedRowsByProductIdObj[row.id] === undefined) {
         groupedRowsByProductIdObj[row.id] = [];
       }
@@ -22,10 +21,8 @@ export function configProductsRoutes(router: Router) {
     });
 
     const groupedRowsByProductId = Object.values(groupedRowsByProductIdObj);
-    console.log(groupedRowsByProductId)
 
     const viableProducts = getViableProducts(groupedRowsByProductId);
-    console.log(viableProducts)
 
     return res.status(200).json({
       data: viableProducts,
