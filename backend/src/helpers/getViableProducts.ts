@@ -1,7 +1,8 @@
 import { calculateProductQuantityToMake } from './calculateProductQuantityToMake';
 
-export function getViableProducts(data: any) {
-  const products: any[] = [];
+// Returns only the product that can be made with the available commodities
+export function getViableProducts(data: any): any {
+  const products: any = [];
 
   data.forEach((row: any) => {
     const result = calculateProductQuantityToMake(row);
