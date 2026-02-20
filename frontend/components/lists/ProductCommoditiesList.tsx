@@ -45,7 +45,7 @@ export function ProductCommoditiesList({ commodities, setRerender }: Props) {
         <div className="flex gap-[8px]">
           <ProductCommoditiesSearchBar setCommodityId={setCommodityId} />
 
-          <Input type="number" placeholder='quantity' defaultValue={quantity} onChange={(e) => setQuantity(e.target.value)}/>
+          <Input width='80px' type="number" placeholder='quantity' defaultValue={quantity} onChange={(e) => setQuantity(e.target.value)}/>
           <Button backgroundColor='var(--color-white)' label="Add" height="auto" onClick={addCommodity} />
         </div>
       </div>
