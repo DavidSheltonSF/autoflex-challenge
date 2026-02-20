@@ -1,10 +1,11 @@
 import { PostgreHelper } from '../../database/database';
 import { Commodity } from '../../types/Commodity';
 import { WithId } from '../../types/WithId';
+import { CommoditiesRepository } from './CommoditiesRepository';
 
 export const dbConnection = PostgreHelper.getInstance();
 
-export class PostgresCommoditiesRepository {
+export class PostgresCommoditiesRepository implements CommoditiesRepository {
   async findAll(): Promise<WithId<Commodity>[]> {
     const result = await dbConnection.query('SELECT * FROM commodities');
     const rows = result.rows;
