@@ -6,6 +6,7 @@ interface Props {
   width?: string;
   name?: string;
   type?: string;
+  step?: string;
   placeholder?: string;
   defaultValue?: string;
   maxLength?: number;
@@ -20,6 +21,7 @@ export function Input(props: Props) {
     width,
     name,
     type,
+    step,
     placeholder,
     defaultValue,
     maxLength,
@@ -31,6 +33,7 @@ export function Input(props: Props) {
       ref={ref}
       name={name}
       type={type}
+      step={step}
       className="w-full border rounded-md py-[4px] px-[8px]"
       placeholder={placeholder}
       defaultValue={defaultValue}
