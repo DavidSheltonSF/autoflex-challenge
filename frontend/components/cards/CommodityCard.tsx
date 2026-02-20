@@ -27,7 +27,7 @@ export function CommodityCard({ id, code, name, quantity }: Props) {
   const setUpdateModalState = updateModalContext.setModalState;
 
   return (
-    <article className="flex flex-col justify-start w-full min-lg:w-[400px] wbg-white border border-black/80 rounded-lg overflow-hidden">
+    <article className="flex flex-col justify-start min-md:w-[60%] min-lg:w-[400px] wbg-white border border-black/80 rounded-lg overflow-hidden">
       <header className="flex justify-between border-b px-[16px] py-[8px] bg-color-primary text-color-white">
         <h1 className="text-2xl">{name}</h1>
         <div className="flex gap-[16px]">
