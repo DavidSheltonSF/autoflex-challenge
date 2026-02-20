@@ -1,9 +1,11 @@
+import { API_URL } from "@/config/api";
+
 export async function fetchAddProductCommodity(
   productId: string,
   commodityId: string,
   quantity: number
 ) {
-  const response = await fetch(`http://localhost:3002/products/${productId}/commodities`, {
+  const response = await fetch(`${API_URL}/products/${productId}/commodities`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

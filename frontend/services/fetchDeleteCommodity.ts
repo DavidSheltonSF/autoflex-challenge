@@ -1,5 +1,7 @@
+import { API_URL } from "@/config/api";
+
 export async function fetchDeleteCommodity(id: string) {
-  const response = await fetch(`http://localhost:3002/commodities/${id}`, {
+  const response = await fetch(`${API_URL}/commodities/${id}`, {
     method: 'DELETE',
   });
 

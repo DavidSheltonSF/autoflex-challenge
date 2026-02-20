@@ -1,8 +1,10 @@
+import { API_URL } from '@/config/api';
 import { Product } from '@/types/Product';
 import { WithId } from '@/types/WithId';
 
 export async function fetchProducts(): Promise<WithId<Product>[]> {
-  const response = await fetch('http://localhost:3002/products');
+  const response = await fetch(`${API_URL}/products`);
+  console.log(response)
 
   if (!response.ok) {
     const errorText = await response.text();

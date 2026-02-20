@@ -1,9 +1,11 @@
+import { API_URL } from "@/config/api";
+
 export async function fetchUpdateCommodity(id: string, formData: FormData) {
   const code = formData.get('code');
   const name = formData.get('name');
   const quantity = formData.get('quantity');
 
-  const response = await fetch(`http://localhost:3002/commodities/${id}`, {
+  const response = await fetch(`${API_URL}/commodities/${id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',

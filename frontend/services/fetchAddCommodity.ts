@@ -1,9 +1,11 @@
+import { API_URL } from "@/config/api";
+
 export async function fetchAddCommodity(formData: FormData) {
   const code = formData.get('code');
   const name = formData.get('name');
   const quantity = formData.get('quantity');
 
-  const response = await fetch('http://localhost:3002/commodities', {
+  const response = await fetch(`${API_URL}/commodities`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
