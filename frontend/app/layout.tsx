@@ -11,6 +11,7 @@ import { UpdateCommodityModal } from '@/components/modals/UpdateCommodityModal';
 import { DeleteCommodityModal } from '@/components/modals/DeleteCommodityModal';
 import { ProductModal } from '@/components/modals/ProductModal';
 import { Navbar } from '@/components/Navbar';
+import { AvailableProductsContainer } from '@/components/AvailableProductsContainer';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -45,6 +46,7 @@ export default function RootLayout({
           <ProductModal />
           <Navbar/>
           <div>{children}</div>
+          <AvailableProductsContainer/>
         </ModalsProvider>
       </body>
     </html>
