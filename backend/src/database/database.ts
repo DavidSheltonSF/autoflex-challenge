@@ -13,11 +13,13 @@ export class PostgreHelper {
   static getInstance(): PostgreHelper {
     if (this.instance) return this.instance;
     this.instance = new PostgreHelper({
+      connectionString: process.env.DATABASE_URL,
       host: process.env.DATABASE_HOST,
       user: process.env.DATABASE_USER,
       port: Number(process.env.DATABASE_PORT),
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE,
+      ssl: true,
     });
 
     return this.instance;
