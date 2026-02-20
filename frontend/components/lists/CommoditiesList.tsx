@@ -45,7 +45,7 @@ export function CommoditiesList({ commodities, isLoading }: Props) {
       />
       <div className="flex flex-col gap-[24px]">
         {commodities.length === 0 && (
-          <div className="text-2xl text-center">
+          <div className="text-2xl">
             <h1>No Commodities where found</h1>
           </div>
         )}

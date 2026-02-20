@@ -45,7 +45,7 @@ export function ProductsList({ products, isLoading }: Props) {
       />
       <div className="flex flex-col gap-[24px]">
         {products.length === 0 && (
-          <div className="text-2xl text-center">
+          <div className="text-2xl">
             <h1>No products where found</h1>
           </div>
         )}
