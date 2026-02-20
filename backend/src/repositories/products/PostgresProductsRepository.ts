@@ -5,7 +5,7 @@ import { ProductsRepository } from './ProductsRepository';
 
 export const dbConnection = PostgreHelper.getInstance();
 
-export class PostgresProductsRepository {
+export class PostgresProductsRepository implements ProductsRepository{
   async findAll(): Promise<WithId<Product>[]> {
     const result = await dbConnection.query('SELECT * FROM products');
     const rows = result.rows;
