@@ -18,6 +18,11 @@ export class PostgresProductsRepository implements ProductsRepository{
   async findById(id: string): Promise<WithId<Product>> {
     const result = await dbConnection.query(`SELECT * FROM products WHERE id = ${id}`);
     const rows = result.rows;
+
+    if(rows.length === 0) {
+      throw Error('User not found')
+    }
+
     const product = rows[0];
     return { id: product.id, code: product.code, name: product.name, price: product.price };
   }
