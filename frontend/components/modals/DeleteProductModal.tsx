@@ -34,7 +34,7 @@ export function DeleteProductModal() {
       <BaseModal
         isLoading={isLoading}
         close={() => setModalState({ isOpen: false })}
-        additionalStyles="h-[25vh] w-[60vw] min-lg:w-[332px]"
+        additionalStyles="h-[25vh] w-[300px] min-md:w-[336px]"
       >
         <div className="flex flex-col  size-full">
           {!feching && (
