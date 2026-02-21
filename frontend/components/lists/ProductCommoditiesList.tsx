@@ -16,7 +16,7 @@ interface Props {
 
 export function ProductCommoditiesList({ commodities, setRerender }: Props) {
   const [commodityId, setCommodityId] = useState<string | null>(null);
-  const [quantity, setQuantity] = useState<string>('0');
+  const [quantity, setQuantity] = useState<string>("1");
 
   const productModalContext = useContext(ProductModalContext);
   if (!productModalContext) {
@@ -45,8 +45,13 @@ export function ProductCommoditiesList({ commodities, setRerender }: Props) {
         <div className="flex gap-[8px]">
           <ProductCommoditiesSearchBar setCommodityId={setCommodityId} />
 
-          <Input width='80px' type="number" placeholder='quantity' defaultValue={quantity} onChange={(e) => setQuantity(e.target.value)}/>
-          <Button backgroundColor='var(--color-white)' label="Add" height="auto" onClick={addCommodity} />
+          <Input width='80px' type="number" placeholder='quantity' defaultValue={quantity} min={1} onChange={(e) => setQuantity(e.target.value)}/>
+          <Button
+            backgroundColor="var(--color-white)"
+            label="Add"
+            height="auto"
+            onClick={addCommodity}
+          />
         </div>
       </div>
 
