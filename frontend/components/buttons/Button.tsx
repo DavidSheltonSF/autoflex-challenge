@@ -6,6 +6,7 @@ interface Props {
   backgroundColor?: string;
   color?: string;
   label?: string;
+  disabled?: boolean;
   onClick: MouseEventHandler<HTMLButtonElement>;
 }
 
@@ -16,12 +17,14 @@ export function Button(props: Props) {
     backgroundColor = 'inherit',
     color = 'inherit',
     label = 'Button',
+    disabled,
     onClick,
   } = props;
   return (
     <button
       onClick={onClick}
       className="bg-gray-300 text-black border rounded-md hover:brightness-130 cursor-pointer"
+      disabled={disabled}
       style={{
         height,
         width,
