@@ -36,7 +36,7 @@ export function BaseModal({ close, children, additionalStyles, isLoading }: Prop
   return (
     <div
       ref={modalRef}
-      className={`flex flex-col fixed top-[10%] left-[50%] translate-x-[-50%] bg-color-white shadow-[0_0_3px_black] rounded-lg fade-in-animation ${additionalStyles} min-h-[20vh]`}
+      className={`flex flex-col fixed top-[10%] left-[50%] translate-x-[-50%] bg-color-white shadow-[0_0_3px_black] rounded-lg fade-in-animation overflow-hidden ${additionalStyles} min-h-[20vh]`}
     >
       <div className="flex justify-end items-center p-[8px] border-b bg-color-primary">
         <button
