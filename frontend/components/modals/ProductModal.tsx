@@ -11,6 +11,7 @@ import { fetchProductCommodities } from '@/services/fetchProductCommodities';
 import { Commodity } from '@/types/Commodity';
 import { WithId } from '@/types/WithId';
 import { ProductModalContext } from '@/contexts/ProductModalContext';
+import { captalizeString } from '@/lib/captalizeString';
 
 export function ProductModal() {
   const [rerender, setRerender] = useState(false);
@@ -69,7 +70,7 @@ export function ProductModal() {
         additionalStyles="h-auto w-[80vw] min-lg:w-[500px]"
       >
         <div className="flex flex-col gap-[24px] justify-center size-full">
-          <h1 className="text-2xl">{product?.name}</h1>
+          <h1 className="text-2xl">{captalizeString(product?.name || '')}</h1>
           <div className="flex flex-col gap-[16px] text-lg">
             <LabelValue label="code" value={product?.code} />
             <LabelValue label="price" value={product?.price} />
