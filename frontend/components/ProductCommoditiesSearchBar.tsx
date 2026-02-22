@@ -66,6 +66,7 @@ export function ProductCommoditiesSearchBar({ setCommodityId, width }: Props) {
         onChange={(e) => setSearchText(e.target.value)}
         onFocus={() => setSearchContainerIsOpen(true)}
         type="text"
+        placeholder='Select a commodity...'
       />
       <div
         className={`absolute bg-color-white top-full right-0 w-full rounded-md overflow-y-auto shadow-[0_1px_1px_gray] ${
