@@ -1,4 +1,4 @@
-export function validadeCode(code: string): boolean {
+export function validateCode(code: string): boolean {
   const codeLength = code.trim().length;
   if (codeLength !== 8) {
     return false;

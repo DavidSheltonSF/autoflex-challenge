@@ -1,12 +1,12 @@
 import { Product } from '../../types/Product';
 import { InvalidCodeError } from '../errors/InvalidCodeError';
 import { InvalidFieldError } from '../errors/InvalidFieldError';
-import { validadeCode, validateName, validatePrice } from './fieldsValidators';
+import { validateCode, validateName, validatePrice } from './fieldsValidators';
 
 export function validadeProduct(product: Product) {
   const { code, name, price } = product;
 
-  if (!validadeCode(code)) {
+  if (!validateCode(code)) {
     throw new InvalidCodeError(code);
   }
 
