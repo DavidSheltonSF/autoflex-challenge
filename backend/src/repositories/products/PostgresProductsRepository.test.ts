@@ -55,7 +55,7 @@ describe('Testing PostgresProductRepository', () => {
     const result = await productRepository.findById(id);
 
     expect(result?.id).toBe(insertResult.rows[0].id);
-    expect(result.code).toBe(insertResult.rows[0].code);
+    expect(result?.code).toBe(insertResult.rows[0].code);
     expect(result?.name).toBe(insertResult.rows[0].name);
     expect(result?.price).toBe(insertResult.rows[0].price);
   });
@@ -102,8 +102,8 @@ describe('Testing PostgresProductRepository', () => {
 
     const result = await dbConnection.query(`SELECT * FROM products WHERE id = ${id}`);
     const rows = result.rows;
-    const product = rows[0]
-    
+    const product = rows[0];
+
     expect(product.code).toBe(updatedProduct.code);
     expect(product?.name).toBe(updatedProduct.name);
     expect(product?.price).toBe(updatedProduct.price);
@@ -127,9 +127,9 @@ describe('Testing PostgresProductRepository', () => {
     const id = insertResult.rows[0].id;
     await productRepository.deleteById(id);
 
-    const result =await  dbConnection.query(`SELECT * FROM products WHERE id = ${id}`) 
-  
-    expect(result.rows.length).toBe(0);
+    const result = await dbConnection.query(`SELECT * FROM products WHERE id = ${id}`);
 
+    expect(result.rows.length).toBe(0);
   });
+
 });

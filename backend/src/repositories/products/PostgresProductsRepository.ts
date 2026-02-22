@@ -5,7 +5,7 @@ import { ProductsRepository } from './ProductsRepository';
 
 export const dbConnection = PostgreHelper.getInstance();
 
-export class PostgresProductsRepository implements ProductsRepository{
+export class PostgresProductsRepository implements ProductsRepository {
   async findAll(): Promise<WithId<Product>[]> {
     const result = await dbConnection.query('SELECT * FROM products');
     const rows = result.rows;
@@ -15,12 +15,12 @@ export class PostgresProductsRepository implements ProductsRepository{
     return mappedProducts;
   }
 
-  async findById(id: string): Promise<WithId<Product>> {
+  async findById(id: string): Promise<WithId<Product> | null> {
     const result = await dbConnection.query(`SELECT * FROM products WHERE id = ${id}`);
     const rows = result.rows;
 
-    if(rows.length === 0) {
-      throw Error('User not found')
+    if (rows.length === 0) {
+      return null;
     }
 
     const product = rows[0];
