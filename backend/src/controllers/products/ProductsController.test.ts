@@ -1,8 +1,8 @@
 import { describe, expect, test } from '@jest/globals';
-import { ProductRepositoryMock } from '../../mocks/ProductRepositoryMock';
 import { ProductService } from '../../services/products/ProductService';
 import { ProductsController } from './ProductsController';
 import { HttpRequest } from '../types/HttpRequest';
+import { ProductRepositoryMock } from '../../tests/mocks/ProductRepositoryMock';
 
 describe('Testing ProductControlelr', () => {
   function mockup() {

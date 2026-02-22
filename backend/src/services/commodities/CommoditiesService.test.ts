@@ -1,7 +1,7 @@
 import { describe, expect, test } from '@jest/globals';
 import { CommoditiesService } from './CommoditiesService';
 import { InvalidCodeError } from '../errors/InvalidCodeError';
-import { CommoditiesRepositoryMock } from '../../mocks/CommoditiesRepositoryMock';
+import { CommoditiesRepositoryMock } from '../../tests/mocks/CommoditiesRepositoryMock';
 
 describe('Testing CommoditiesService', () => {
   function mockup() {

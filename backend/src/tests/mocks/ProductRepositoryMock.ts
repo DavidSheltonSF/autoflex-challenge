@@ -1,6 +1,6 @@
-import { ProductsRepository } from '../repositories/products/ProductsRepository';
-import { Product } from '../types/Product';
-import { ProductCommodityRelation } from '../types/ProductCommodityRelation';
+import { ProductsRepository } from '../../repositories/products/ProductsRepository';
+import { Product } from '../../types/Product';
+import { ProductCommodityRelation } from '../../types/ProductCommodityRelation';
 
 export class ProductRepositoryMock implements ProductsRepository {
   findAllWasCalled: boolean = false;

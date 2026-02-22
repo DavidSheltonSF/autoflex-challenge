@@ -1,5 +1,5 @@
-import { CommoditiesRepository } from '../repositories/commodities/CommoditiesRepository';
-import { Commodity } from '../types/Commodity';
+import { CommoditiesRepository } from '../../repositories/commodities/CommoditiesRepository';
+import { Commodity } from '../../types/Commodity';
 
 export class CommoditiesRepositoryMock implements CommoditiesRepository {
   findAllWasCalled: boolean = false;

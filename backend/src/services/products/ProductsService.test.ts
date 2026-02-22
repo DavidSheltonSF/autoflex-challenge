@@ -1,5 +1,5 @@
 import { describe, expect, test } from '@jest/globals';
-import { ProductRepositoryMock } from '../../mocks/ProductRepositoryMock';
+import { ProductRepositoryMock } from '../../tests/mocks/ProductRepositoryMock';
 import { ProductService } from './ProductService';
 import { InvalidCodeError } from '../errors/InvalidCodeError';
 
