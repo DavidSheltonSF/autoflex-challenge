@@ -1,9 +1,11 @@
 import { HttpRequest } from '../types/HttpRequest';
 import {
+  addCommodityResponse,
   createResponse,
   deleteByIdResponse,
   findAllResponse,
   findByIdResponse,
+  removeCommodityResponse,
   updateByIdResponse,
 } from './responses';
 
@@ -13,4 +15,6 @@ export interface IProductsController {
   create: (httpRequest: HttpRequest) => Promise<createResponse>;
   updateById: (httpRequest: HttpRequest) => Promise<updateByIdResponse>;
   deleteById: (httpRequest: HttpRequest) => Promise<deleteByIdResponse>;
+  addCommodity: (httpRequest: HttpRequest) => Promise<addCommodityResponse>;
+  removeCommodity: (httpRequest: HttpRequest) => Promise<removeCommodityResponse>;
 }

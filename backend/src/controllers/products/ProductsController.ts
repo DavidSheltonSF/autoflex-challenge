@@ -1,3 +1,4 @@
+import { ICommoditiesService } from '../../services/commodities/ICommoditiesService';
 import { InvalidCodeError } from '../../services/errors/InvalidCodeError';
 import { InvalidFieldError } from '../../services/errors/InvalidFieldError';
 import { IProductService } from '../../services/products/IProductService';
@@ -12,10 +13,14 @@ import {
   createResponse,
   deleteByIdResponse,
   updateByIdResponse,
+  addCommodityResponse,
 } from './responses';
 
 export class ProductsController implements IProductsController {
-  constructor(private readonly productService: IProductService) {}
+  constructor(
+    private readonly productService: IProductService,
+    private readonly commoditiesService: ICommoditiesService
+  ) {}
   findAll = async (httpRequest: HttpRequest): Promise<findAllResponse> => {
     const result = await this.productService.findAll();
     return HttpResponseFactory.makeOk({ data: result });
@@ -130,5 +135,85 @@ export class ProductsController implements IProductsController {
     const result = await this.productService.deleteById(id);
 
     return HttpResponseFactory.makeOk({ data: result });
+  };
+
+  addCommodity = async (httpRequest: HttpRequest): Promise<addCommodityResponse> => {
+    try {
+      const productId = httpRequest.params.id;
+
+      const { body } = httpRequest;
+
+      if (!productId) {
+        return HttpResponseFactory.makeBadRequest({ message: 'Missing product id' });
+      }
+      if (!body) {
+        return HttpResponseFactory.makeBadRequest({ message: 'Missing body request' });
+      }
+
+      const { commodityId, quantity } = body;
+      if (!commodityId || !quantity) {
+        return HttpResponseFactory.makeBadRequest({
+          message: `Missing required fields`,
+        });
+      }
+
+      const productExists = await this.productService.checkExistence(productId);
+      if (!productExists) {
+        return HttpResponseFactory.makeNotFound({
+          message: `Product with id '${productId}' was not found`,
+        });
+      }
+
+      const commodityExists = await this.commoditiesService.checkExistence(commodityId);
+      if (!commodityExists) {
+        return HttpResponseFactory.makeNotFound({
+          message: `Commodity with it '${commodityId}' was not found`,
+        });
+      }
+
+      const result = await this.productService.addCommodity({ productId, commodityId, quantity });
+
+      return HttpResponseFactory.makeCreated({
+        data: result,
+      });
+    } catch (error) {
+      console.log(error);
+      return HttpResponseFactory.makeServerError({ message: 'Something went wrong in the server' });
+    }
+  };
+
+  removeCommodity = async (httpRequest: HttpRequest): Promise<addCommodityResponse> => {
+    try {
+      const { productId, commodityId } = httpRequest.params;
+
+      if (!productId || !commodityId) {
+        return HttpResponseFactory.makeBadRequest({
+          message: `Missing required params productId or commodityId`,
+        });
+      }
+
+      const productExists = await this.productService.checkExistence(productId);
+      if (!productExists) {
+        return HttpResponseFactory.makeNotFound({
+          message: `Product with it '${productId}' was not found`,
+        });
+      }
+
+      const commodityExists = await this.commoditiesService.checkExistence(commodityId);
+      if (!commodityExists) {
+        return HttpResponseFactory.makeNotFound({
+          message: `Commodity with it '${commodityId}' was not found`,
+        });
+      }
+
+      const result = await this.productService.removeCommodity(productId, commodityId);
+
+      return HttpResponseFactory.makeOk({
+        data: result,
+      });
+    } catch (error) {
+      console.log(error);
+      return HttpResponseFactory.makeServerError({ message: 'Something went wrong in the server' });
+    }
   };
 }
