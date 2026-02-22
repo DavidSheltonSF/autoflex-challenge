@@ -89,13 +89,14 @@ export class ProductsController implements IProductsController {
       }
 
       const { code, name, price } = body;
-      const result = await this.productService.updateById(id, { code, name, price });
 
-      if (!result) {
+      const exists = await this.productService.checkExistence(id);
+      if (!exists) {
         return HttpResponseFactory.makeNotFound({
           message: `Product with id '${id} was not found`,
         });
       }
+      const result = await this.productService.updateById(id, { code, name, price });
 
       return HttpResponseFactory.makeOk({ data: result });
     } catch (error) {
@@ -119,12 +120,14 @@ export class ProductsController implements IProductsController {
       return HttpResponseFactory.makeBadRequest({ message: 'Missing product id' });
     }
 
-    const result = await this.productService.deleteById(id);
-    if (!result) {
+    const exists = await this.productService.checkExistence(id);
+    console.log(exists);
+    if (!exists) {
       return HttpResponseFactory.makeNotFound({
-        message: `Product with id '${id}' was not found`,
+        message: `Product with id '${id} was not found`,
       });
     }
+    const result = await this.productService.deleteById(id);
 
     return HttpResponseFactory.makeOk({ data: result });
   };
