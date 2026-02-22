@@ -35,7 +35,7 @@ export function AddProductModal() {
     isOpen && (
       <BaseModal
         close={() => setModalState({ isOpen: false })}
-        additionalStyles="h-auto w-[90vw] min-lg:w-[400px]"
+        additionalStyles="h-auto w-[90vw] min-md:w-[400px]"
       >
         <div className="flex flex-col gap-[16px] justify-center size-full">
           {formState && (

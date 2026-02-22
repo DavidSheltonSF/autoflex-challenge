@@ -75,7 +75,7 @@ export function UpdateCommodityModal() {
       <BaseModal
         isLoading={commodityIsLoading}
         close={() => setModalState({ isOpen: false })}
-        additionalStyles="h-auto w-[80vw] min-lg:w-[400px]"
+        additionalStyles="h-auto w-[90vw] min-md:w-[400px]"
       >
         <div className="flex flex-col gap-[16px] justify-center size-full">
           {fetchCommodityState && (
