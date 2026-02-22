@@ -44,23 +44,31 @@ export function ProductCommoditiesList({ commodities, setRerender }: Props) {
     <div className="flex flex-col gap-[24px] w-full">
       <div className="flex flex-col gap-[16px] py-[8px] border-t border-black/30">
         <h1 className="text-2xl">Commodities</h1>
-        <div className="flex gap-[8px]">
-          <ProductCommoditiesSearchBar setCommodityId={setCommodityId} />
-          <Input
-            width="80px"
-            type="number"
-            defaultValue={quantity}
-            min={1}
-            onChange={(e) => setQuantity(e.target.value)}
-          />
-          <Button
-            backgroundColor={readyToSubmit ? 'var(--color-primary)' : 'gray'}
-            color="var(--color-white)"
-            label="Add"
-            height="auto"
-            disabled={!readyToSubmit}
-            onClick={addCommodity}
-          />
+        <div className="flex flex-col min-md:flex-row gap-[16px] min-md:gap-[8px]">
+          <span>
+            <ProductCommoditiesSearchBar width={"100%"} setCommodityId={setCommodityId} />
+          </span>
+          <span>
+            <Input
+              width="100%"
+              height='32px'
+              type="number"
+              defaultValue={quantity}
+              min={1}
+              onChange={(e) => setQuantity(e.target.value)}
+            />
+          </span>
+          <span className='w-full min-md:w-[100px]'>
+            <Button
+              backgroundColor={readyToSubmit ? 'var(--color-primary)' : 'gray'}
+              color="var(--color-white)"
+              label="Add"
+              width="100%"
+              height="32px"
+              disabled={!readyToSubmit}
+              onClick={addCommodity}
+            />
+          </span>
         </div>
       </div>
 
