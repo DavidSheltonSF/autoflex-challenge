@@ -46,19 +46,19 @@ export function ProductCommoditiesList({ commodities, setRerender }: Props) {
         <h1 className="text-2xl">Commodities</h1>
         <div className="flex flex-col min-md:flex-row gap-[16px] min-md:gap-[8px]">
           <span>
-            <ProductCommoditiesSearchBar width={"100%"} setCommodityId={setCommodityId} />
+            <ProductCommoditiesSearchBar width={'100%'} setCommodityId={setCommodityId} />
           </span>
-          <span>
+          <span className="w-full min-md:w-[100px]">
             <Input
               width="100%"
-              height='32px'
+              height="32px"
               type="number"
               defaultValue={quantity}
               min={1}
               onChange={(e) => setQuantity(e.target.value)}
             />
           </span>
-          <span className='w-full min-md:w-[100px]'>
+          <span className="w-full min-md:w-[100px]">
             <Button
               backgroundColor={readyToSubmit ? 'var(--color-primary)' : 'gray'}
               color="var(--color-white)"
