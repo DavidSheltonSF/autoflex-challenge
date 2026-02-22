@@ -1,8 +1,5 @@
-import { HttpStatusCodeStr } from './HttpStatusCodeSting';
-
 export interface HttpResponse<T> {
-  statusCode: number;
-  code: HttpStatusCodeStr;
+  status: number;
   data?: T;
   message?: string;
 }
