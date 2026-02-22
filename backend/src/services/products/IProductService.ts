@@ -6,8 +6,8 @@ export interface IProductService {
   findAll: () => Promise<WithId<Product>[]>;
   findById: (id: string) => Promise<WithId<Product> | null>;
   create: (product: Product) => Promise<WithId<Product>>;
-  updateById: (id: string, product: Product) => Promise<WithId<Product> | null>;
-  deleteById: (id: string) => Promise<WithId<Product> | null>;
+  updateById: (id: string, product: Product) => Promise<WithId<Product>>;
+  deleteById: (id: string) => Promise<WithId<Product>>;
   checkExistence: (id: string) => Promise<boolean>;
   addCommodity: (
     productCommodityRelation: ProductCommodityRelation

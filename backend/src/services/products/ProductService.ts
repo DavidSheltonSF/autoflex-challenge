@@ -22,20 +22,12 @@ export class ProductService implements IProductService {
     return await this.productRepository.create(product);
   }
 
-  async updateById(id: string, product: Product): Promise<WithId<Product> | null> {
+  async updateById(id: string, product: Product): Promise<WithId<Product>> {
     validadeProduct(product);
-    const exists = await this.checkExistence(id);
-    if (!exists) {
-      return null;
-    }
     return await this.productRepository.updateById(id, product);
   }
 
-  async deleteById(id: string): Promise<WithId<Product> | null> {
-    const exists = this.checkExistence(id);
-    if (!exists) {
-      return null;
-    }
+  async deleteById(id: string): Promise<WithId<Product>> {
     return await this.productRepository.deleteById(id);
   }
 
