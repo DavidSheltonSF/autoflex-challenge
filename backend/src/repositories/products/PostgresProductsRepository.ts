@@ -66,4 +66,9 @@ export class PostgresProductsRepository implements ProductsRepository {
     const product = rows[0];
     return { id: product.id, code: product.code, name: product.name, price: product.price };
   }
+
+  async checkExistence(id: string): Promise<boolean> {
+    const result = await this.findById(id);
+    return result !== null;
+  }
 }

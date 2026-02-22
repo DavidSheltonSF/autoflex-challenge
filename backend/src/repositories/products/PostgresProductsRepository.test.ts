@@ -132,4 +132,27 @@ describe('Testing PostgresProductRepository', () => {
     expect(result.rows.length).toBe(0);
   });
 
+  test('should return true if the product exist and false if it does not', async () => {
+    const { productRepository } = mockup();
+
+    const newProduct = {
+      code: '5154gga',
+      name: 'cadeira de ferro',
+      price: 500,
+    };
+
+    const query = {
+      text: 'INSERT INTO products (code, name, price) VALUES ($1, $2, $3) RETURNING id',
+      values: [newProduct.code, newProduct.name, newProduct.price],
+    };
+
+    const insertResult = await dbConnection.query(query);
+    const id = insertResult.rows[0].id;
+
+    const existingProduct = await productRepository.checkExistence(id);
+    const nonExistingProduct = await productRepository.checkExistence('2');
+
+    expect(existingProduct).toBeTruthy();
+    expect(nonExistingProduct).toBeFalsy();
+  });
 });
