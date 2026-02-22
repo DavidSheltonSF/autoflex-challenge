@@ -155,4 +155,98 @@ describe('Testing PostgresProductRepository', () => {
     expect(existingProduct).toBeTruthy();
     expect(nonExistingProduct).toBeFalsy();
   });
+
+  test('should add one commodity to a product', async () => {
+    const { productRepository } = mockup();
+
+    const newProduct = {
+      code: 'prod1234',
+      name: 'cadeira de ferro',
+      price: 500,
+    };
+
+    const newCommodity = {
+      code: 'com3214',
+      name: 'barra de ferro',
+      quantity: 50,
+    };
+
+    const insertProductQuery = {
+      text: 'INSERT INTO products (code, name, price) VALUES ($1, $2, $3) RETURNING id',
+      values: [newProduct.code, newProduct.name, newProduct.price],
+    };
+    const insertCommodityQuery = {
+      text: 'INSERT INTO commodities (code, name, quantity) VALUES ($1, $2, $3) RETURNING id',
+      values: [newCommodity.code, newCommodity.name, newCommodity.quantity],
+    };
+
+    const insertProductResult = await dbConnection.query(insertProductQuery);
+    const insertCommodityResult = await dbConnection.query(insertCommodityQuery);
+
+    const productId = insertProductResult.rows[0].id;
+    const commodityId = insertCommodityResult.rows[0].id;
+
+    const newProductCommodity = { productId, commodityId, quantity: 50 };
+
+    const addCommodityResult = await productRepository.addCommodity(newProductCommodity);
+
+    expect(addCommodityResult.productId).toBe(productId);
+    expect(addCommodityResult.commodityId).toBe(commodityId);
+    expect(addCommodityResult.quantity).toBe(newCommodity.quantity);
+  });
+
+  test('should remove one commodity from a product', async () => {
+    const { productRepository } = mockup();
+
+    const newProduct = {
+      code: 'prod1234',
+      name: 'cadeira de ferro',
+      price: 500,
+    };
+
+    const newCommodity = {
+      code: 'com3214',
+      name: 'barra de ferro',
+      quantity: 50,
+    };
+
+    const insertQueries = {
+      product: {
+        text: 'INSERT INTO products (code, name, price) VALUES ($1, $2, $3) RETURNING id',
+        values: [newProduct.code, newProduct.name, newProduct.price],
+      },
+      commodity: {
+        text: 'INSERT INTO commodities (code, name, quantity) VALUES ($1, $2, $3) RETURNING id',
+        values: [newCommodity.code, newCommodity.name, newCommodity.quantity],
+      },
+    };
+
+    const insertProductResult = await dbConnection.query(insertQueries.product);
+    const insertCommodityResult = await dbConnection.query(insertQueries.commodity);
+
+    const productId = insertProductResult.rows[0].id;
+    const commodityId = insertCommodityResult.rows[0].id;
+
+    const insertProductCommodityQuery = {
+      text: 'INSERT INTO products_commodities (productId, commodityId, quantity) VALUES ($1, $2, $3) RETURNING *',
+      values: [productId, commodityId, newCommodity.quantity],
+    };
+
+    const insertProductCommodityResult = await dbConnection.query(insertProductCommodityQuery);
+    const productCommodityId = insertProductCommodityResult.rows[0].id;
+
+    const removeProductCommodityResult = await productRepository.removeCommodity(
+      productId,
+      commodityId
+    );
+
+    const result = await dbConnection.query(
+      `SELECT * FROM products_commodities WHERE ID = ${productCommodityId}`
+    );
+
+    expect(result.rows.length).toBe(0);
+    expect(removeProductCommodityResult.productId).toBe(productId);
+    expect(removeProductCommodityResult.commodityId).toBe(commodityId);
+    expect(removeProductCommodityResult.quantity).toBe(newCommodity.quantity);
+  });
 });

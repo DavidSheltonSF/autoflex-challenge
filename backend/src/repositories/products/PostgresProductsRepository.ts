@@ -1,5 +1,6 @@
 import { PostgreHelper } from '../../database/database';
 import { Product } from '../../types/Product';
+import { ProductCommodityRelation } from '../../types/ProductCommodityRelation';
 import { WithId } from '../../types/WithId';
 import { checkIdIsNumeric } from '../helpers/checkIdIsNumeric';
 import { ProductsRepository } from './ProductsRepository';
@@ -74,5 +75,42 @@ export class PostgresProductsRepository implements ProductsRepository {
   async checkExistence(id: string): Promise<boolean> {
     const result = await this.findById(id);
     return result !== null;
+  }
+
+  async addCommodity(
+    productCommodityRelation: ProductCommodityRelation
+  ): Promise<WithId<ProductCommodityRelation>> {
+    const { productId, commodityId, quantity } = productCommodityRelation;
+    const query = {
+      text: `INSERT INTO products_commodities(productid, commodityid, quantity) VALUES($1, $2, $3) RETURNING *`,
+      values: [productId, commodityId, quantity],
+    };
+    const result = await dbConnection.query(query);
+    const rows = result.rows;
+    const productCommodity = rows[0];
+
+    return {
+      id: productCommodity.id,
+      productId: productCommodity.productid,
+      commodityId: productCommodity.commodityid,
+      quantity: productCommodity.quantity,
+    };
+  }
+  async removeCommodity(
+    productId: string,
+    commodityId: string
+  ): Promise<WithId<ProductCommodityRelation>> {
+    const result = await dbConnection.query(
+      `DELETE FROM products_commodities pc WHERE pc.productId = ${productId} AND pc.commodityId = ${commodityId} RETURNING *`
+    );
+    const rows = result.rows;
+    const productCommodity = rows[0];
+
+    return {
+      id: productCommodity.id,
+      productId: productCommodity.productid,
+      commodityId: productCommodity.commodityid,
+      quantity: productCommodity.quantity,
+    };
   }
 }
