@@ -15,12 +15,12 @@ export class PostgresCommoditiesRepository implements CommoditiesRepository {
     return mappedCommodities;
   }
 
-  async findById(id: string): Promise<WithId<Commodity>> {
+  async findById(id: string): Promise<WithId<Commodity> | null> {
     const result = await dbConnection.query(`SELECT * FROM commodities WHERE id = ${id}`);
     const rows = result.rows;
 
     if (rows.length === 0) {
-      throw Error('Commodity not found');
+      return null
     }
 
     const commodity = rows[0];

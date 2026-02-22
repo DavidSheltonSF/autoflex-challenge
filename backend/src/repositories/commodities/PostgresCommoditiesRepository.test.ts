@@ -55,7 +55,7 @@ describe('Testing PostgresCommodityRepository', () => {
     const result = await commodityRepository.findById(id);
 
     expect(result?.id).toBe(insertResult.rows[0].id);
-    expect(result.code).toBe(insertResult.rows[0].code);
+    expect(result?.code).toBe(insertResult.rows[0].code);
     expect(result?.name).toBe(insertResult.rows[0].name);
     expect(result?.quantity).toBe(insertResult.rows[0].quantity);
   });

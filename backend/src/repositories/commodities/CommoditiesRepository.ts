@@ -3,7 +3,7 @@ import { WithId } from '../../types/WithId';
 
 export interface CommoditiesRepository {
   findAll: () => Promise<WithId<Commodity>[]>;
-  findById: (id: string) => Promise<WithId<Commodity>>;
+  findById: (id: string) => Promise<WithId<Commodity> | null>;
   create: (commodity: Commodity) => Promise<WithId<Commodity>>;
   updateById: (id: string, commodity: Commodity) => Promise<WithId<Commodity>>;
   deleteById: (id: string) => Promise<WithId<Commodity>>;
