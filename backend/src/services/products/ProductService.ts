@@ -22,7 +22,7 @@ export class ProductService implements IProductService {
 
   async updateById(id: string, product: Product): Promise<WithId<Product> | null> {
     validadeProduct(product);
-    const exists = this.checkExistence(id);
+    const exists = await this.checkExistence(id);
     if (!exists) {
       return null;
     }
