@@ -12,6 +12,11 @@ export function configProductsRoutes(router: Router) {
   router.get('/products/:id', expressHttpAdapter(productsController.findById));
   router.put('/products/:id', expressHttpAdapter(productsController.updateById));
   router.delete('/products/:id', expressHttpAdapter(productsController.deleteById));
+  router.post('/products/:id/commodities', expressHttpAdapter(productsController.addCommodity));
+  router.delete(
+    '/products/:productId/commodities/:commodityId',
+    expressHttpAdapter(productsController.removeCommodity)
+  );
 
   router.get('/availableProducts', async (req: Request, res: Response) => {
     const query = `
@@ -39,47 +44,6 @@ export function configProductsRoutes(router: Router) {
     });
   });
 
-  router.post('/products/:id/commodities', async (req: Request, res: Response) => {
-    const productId = req.params.id;
-    if (!productId) {
-      return res.status(400).json({
-        message: 'Missing products id',
-      });
-    }
-
-    if (!req.body) {
-      return res.status(400).json({
-        message: 'Missing request body',
-      });
-    }
-
-    const { commodityId, quantity } = req.body;
-    if (!commodityId || !quantity) {
-      return res.status(400).json({
-        message: 'Missing required fields',
-      });
-    }
-
-    const productQuery = await dbConnection.query(
-      `SELECT name FROM products WHERE id = ${productId}`
-    );
-    if (productQuery.rows.length === 0) {
-      return res.status(404).json({
-        message: `Product with id ${productId} was not found`,
-      });
-    }
-
-    const query = {
-      text: `INSERT INTO products_commodities(productid, commodityid, quantity) VALUES($1, $2, $3) RETURNING *`,
-      values: [productId, commodityId, quantity],
-    };
-    const result = await dbConnection.query(query);
-
-    return res.status(201).json({
-      data: result.rows[0],
-    });
-  });
-
   router.get('/products/:id/commodities', async (req: Request, res: Response) => {
     const productId = req.params.id;
     if (!productId) {
@@ -94,56 +58,4 @@ export function configProductsRoutes(router: Router) {
       data: result.rows,
     });
   });
-
-  router.delete(
-    '/products/:productId/commodities/:commodityId',
-    async (req: Request, res: Response) => {
-      const productId = req.params.productId;
-      const commodityId = req.params.commodityId;
-
-      if (!productId) {
-        return res.status(400).json({
-          message: 'Missing products id',
-        });
-      }
-      if (!commodityId) {
-        return res.status(400).json({
-          message: 'Missing commodity id',
-        });
-      }
-
-      const productQuery = await dbConnection.query(
-        `SELECT name FROM products WHERE id = ${productId}`
-      );
-      if (productQuery.rows.length === 0) {
-        return res.status(404).json({
-          message: `Product with id ${productId} was not found`,
-        });
-      }
-
-      const productCommodity = await dbConnection.query(
-        `SELECT id FROM products_commodities pc WHERE  pc.productid = ${productId} AND pc.commodityid = ${commodityId}`
-      );
-      if (productCommodity.rows.length === 0) {
-        return res.status(404).json({
-          message: `Product commodity was not was not found`,
-        });
-      }
-
-      const result = await dbConnection.query(
-        `DELETE FROM products_commodities pc WHERE pc.productId = ${productId} AND pc.commodityId = ${commodityId} RETURNING *`
-      );
-      const rows = result.rows;
-
-      if (rows.length === 0) {
-        return res.status(500).json({
-          message: `Something went wrong and nothing was deleted`,
-        });
-      }
-
-      return res.status(200).json({
-        message: 'DELETED',
-      });
-    }
-  );
 }
