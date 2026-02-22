@@ -1,6 +1,7 @@
 import { PostgreHelper } from '../../database/database';
 import { Product } from '../../types/Product';
 import { WithId } from '../../types/WithId';
+import { checkId } from '../helpers/checkId';
 import { ProductsRepository } from './ProductsRepository';
 
 export const dbConnection = PostgreHelper.getInstance();
@@ -16,6 +17,7 @@ export class PostgresProductsRepository implements ProductsRepository {
   }
 
   async findById(id: string): Promise<WithId<Product> | null> {
+    checkId(id);
     const result = await dbConnection.query(`SELECT * FROM products WHERE id = ${id}`);
     const rows = result.rows;
 
