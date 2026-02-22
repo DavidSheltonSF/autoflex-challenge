@@ -1,11 +1,11 @@
 import { PostgresProductsRepository } from '../../repositories/products/PostgresProductsRepository';
 import { ProductService } from '../../services/products/ProductService';
-import { IProductController } from '../products/IProductController';
-import { ProductController } from '../products/ProductController';
+import { IProductsController } from '../products/IProductsController';
+import { ProductsController } from '../products/ProductsController';
 
-export function makeProductController(): IProductController {
+export function makeProductsController(): IProductsController {
   const productsRepository = new PostgresProductsRepository();
   const productsService = new ProductService(productsRepository);
-  const productController = new ProductController(productsService);
-  return productController;
+  const productsController = new ProductsController(productsService);
+  return productsController;
 }

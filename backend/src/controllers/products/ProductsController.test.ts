@@ -1,42 +1,42 @@
 import { describe, expect, test } from '@jest/globals';
 import { ProductRepositoryMock } from '../../mocks/ProductRepositoryMock';
 import { ProductService } from '../../services/products/ProductService';
-import { ProductController } from './ProductController';
+import { ProductsController } from './ProductsController';
 import { HttpRequest } from '../types/HttpRequest';
 
 describe('Testing ProductControlelr', () => {
   function mockup() {
     const productRepository = new ProductRepositoryMock();
     const productService = new ProductService(productRepository);
-    const productController = new ProductController(productService);
+    const productsController = new ProductsController(productService);
 
     return {
       productRepository,
       productService,
-      productController,
+      productsController,
     };
   }
 
   test('should call productRepository.findAll()', async () => {
-    const { productController, productRepository } = mockup();
-    await productController.findAll({});
+    const { productsController, productRepository } = mockup();
+    await productsController.findAll({});
     expect(productRepository.findAllWasCalled).toBeTruthy();
   });
 
   test('should call productRepository.findById() with the id provided and return OK (200)', async () => {
-    const { productController, productRepository } = mockup();
+    const { productsController, productRepository } = mockup();
     const id = '22';
     const httpRequest: HttpRequest = {
       params: { id },
     };
-    const response = await productController.findById(httpRequest);
+    const response = await productsController.findById(httpRequest);
 
     expect(productRepository.findByIdParam?.id).toBe(id);
     expect(response.status).toBe(200);
   });
 
   test('should call productRepository.create() with data provided and return OK (200)', async () => {
-    const { productController, productRepository } = mockup();
+    const { productsController, productRepository } = mockup();
 
     const newProduct = {
       code: 'prod1234',
@@ -47,7 +47,7 @@ describe('Testing ProductControlelr', () => {
     const httpRequest: HttpRequest = {
       body: newProduct,
     };
-    const response = await productController.create(httpRequest);
+    const response = await productsController.create(httpRequest);
 
     expect(response.status).toBe(200);
     expect(productRepository.createParam?.code).toBe(newProduct.code);
@@ -56,7 +56,7 @@ describe('Testing ProductControlelr', () => {
   });
 
   test('should not call productRepository.create and return UNPROCESSABLE_CONTENT (422) if a invalid field is provided', async () => {
-    const { productController, productRepository } = mockup();
+    const { productsController, productRepository } = mockup();
 
     const newProduct = {
       code: 'invalideraearae1234',
@@ -68,14 +68,14 @@ describe('Testing ProductControlelr', () => {
       body: newProduct,
     };
 
-    const result = await productController.create(httpRequest);
+    const result = await productsController.create(httpRequest);
 
     expect(result.status).toBe(422);
     expect(productRepository.createParam).toBeFalsy();
   });
 
   test('should not call productRepository.create and return UNPROCESSABLE_CONTENT (422) if required fields are missing', async () => {
-    const { productController, productRepository } = mockup();
+    const { productsController, productRepository } = mockup();
 
     const newProduct = {
       code: 'invalideraearae1234',
@@ -87,14 +87,14 @@ describe('Testing ProductControlelr', () => {
       body: newProduct,
     };
 
-    const result = await productController.create(httpRequest);
+    const result = await productsController.create(httpRequest);
 
     expect(result.status).toBe(422);
     expect(productRepository.createParam).toBeFalsy();
   });
 
   test('should call productRepository.updateById with id and data provided and return OK (200)', async () => {
-    const { productController, productRepository } = mockup();
+    const { productsController, productRepository } = mockup();
 
     const id = '22';
     const product = {
@@ -108,7 +108,7 @@ describe('Testing ProductControlelr', () => {
       body: product,
     };
 
-    const response = await productController.updateById(httpRequest);
+    const response = await productsController.updateById(httpRequest);
 
     expect(response.status).toBe(200);
     expect(productRepository.updateParam?.id).toBe(id);
@@ -118,7 +118,7 @@ describe('Testing ProductControlelr', () => {
   });
 
   test('should not call productRepository.updateById with id and data provided and return BAD_REQUEST (400) if required fields are missing', async () => {
-    const { productController, productRepository } = mockup();
+    const { productsController, productRepository } = mockup();
 
     const id = '22';
     const product = {
@@ -130,7 +130,7 @@ describe('Testing ProductControlelr', () => {
       body: product,
     };
 
-    const response = await productController.updateById(httpRequest);
+    const response = await productsController.updateById(httpRequest);
     console.log(response);
 
     expect(response.status).toBe(400);
@@ -138,14 +138,14 @@ describe('Testing ProductControlelr', () => {
   });
 
   test('should call productRepository.deleteById with the id provided and return OK (200)', async () => {
-    const { productController, productRepository } = mockup();
+    const { productsController, productRepository } = mockup();
 
     const id = '22';
     const httpRequest: HttpRequest = {
       params: { id },
     };
 
-    const response = await productController.deleteById(httpRequest);
+    const response = await productsController.deleteById(httpRequest);
     expect(response.status).toBe(200);
     expect(productRepository.deleteParam?.id).toBe(id);
   });

@@ -2,16 +2,16 @@ import { Router, type Request, type Response } from 'express';
 import { dbConnection } from '..';
 import { getViableProducts } from '../utils/getViableProducts';
 import { expressHttpAdapter } from './adapters/expressHttpAdapter';
-import { makeProductController } from '../controllers/factories/makeProductController';
+import { makeProductsController } from '../controllers/factories/makeProductsController';
 
-const productController = makeProductController();
+const productsController = makeProductsController();
 
 export function configProductsRoutes(router: Router) {
-  router.post('/products', expressHttpAdapter(productController.create));
-  router.get('/products', expressHttpAdapter(productController.findAll));
-  router.get('/products/:id', expressHttpAdapter(productController.findById));
-  router.put('/products/:id', expressHttpAdapter(productController.updateById));
-  router.delete('/products/:id', expressHttpAdapter(productController.deleteById));
+  router.post('/products', expressHttpAdapter(productsController.create));
+  router.get('/products', expressHttpAdapter(productsController.findAll));
+  router.get('/products/:id', expressHttpAdapter(productsController.findById));
+  router.put('/products/:id', expressHttpAdapter(productsController.updateById));
+  router.delete('/products/:id', expressHttpAdapter(productsController.deleteById));
 
   router.get('/availableProducts', async (req: Request, res: Response) => {
     const query = `

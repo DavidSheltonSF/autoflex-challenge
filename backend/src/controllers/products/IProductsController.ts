@@ -7,7 +7,7 @@ import {
   updateByIdResponse,
 } from './responses';
 
-export interface IProductController {
+export interface IProductsController {
   findAll: (httpRequest: HttpRequest) => Promise<findAllResponse>;
   findById: (httpRequest: HttpRequest) => Promise<findByIdResponse>;
   create: (httpRequest: HttpRequest) => Promise<createResponse>;
