@@ -4,6 +4,7 @@ import { IProductService } from '../../services/products/IProductService';
 import { HttpResponseFactory } from '../factories/HttpResponseFactory';
 import { getProductMissingFields } from '../helpers/getProductMissingFields';
 import { HttpRequest } from '../types/HttpRequest';
+import { IProductController } from './IProductController';
 
 import {
   findAllResponse,
@@ -13,7 +14,7 @@ import {
   updateByIdResponse,
 } from './responses';
 
-export class ProductController {
+export class ProductController implements IProductController {
   constructor(private readonly productService: IProductService) {}
   findAll = async (httpRequest: HttpRequest): Promise<findAllResponse> => {
     const result = await this.productService.findAll();
