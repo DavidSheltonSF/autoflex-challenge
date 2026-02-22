@@ -1,11 +1,18 @@
 import { Router, type Request, type Response } from 'express';
 import { dbConnection } from '..';
 import { getViableProducts } from '../utils/getViableProducts';
-import { PostgresProductsRepository } from '../repositories/products/PostgresProductsRepository';
+import { expressHttpAdapter } from './adapters/expressHttpAdapter';
+import { makeProductController } from '../controllers/factories/makeProductController';
 
-const productsRepository = new PostgresProductsRepository();
+const productController = makeProductController();
 
 export function configProductsRoutes(router: Router) {
+  router.post('/products', expressHttpAdapter(productController.create));
+  router.get('/products', expressHttpAdapter(productController.findAll));
+  router.get('/products/:id', expressHttpAdapter(productController.findById));
+  router.put('/products/:id', expressHttpAdapter(productController.updateById));
+  router.delete('/products/:id', expressHttpAdapter(productController.deleteById));
+
   router.get('/availableProducts', async (req: Request, res: Response) => {
     const query = `
   SELECT p.id, p.name, p.price, pc.quantity as commodityQuantity, c.name as commodityName, c.quantity as availableCommodityQuantity
@@ -29,31 +36,6 @@ export function configProductsRoutes(router: Router) {
 
     return res.status(200).json({
       data: viableProducts,
-    });
-  });
-
-  router.post('/products', async (req: Request, res: Response) => {
-    if (!req.body) {
-      return res.status(400).json({
-        message: 'Missing request body',
-      });
-    }
-
-    const { code, name, price } = req.body;
-    if (!code || !name || !price) {
-      return res.status(400).json({
-        message: 'Missing required fields',
-      });
-    }
-
-    const result = await productsRepository.create({
-      code,
-      name,
-      price,
-    });
-
-    return res.status(201).json({
-      data: result,
     });
   });
 
@@ -98,13 +80,6 @@ export function configProductsRoutes(router: Router) {
     });
   });
 
-  router.get('/products', async (req: Request, res: Response) => {
-    const result = await productsRepository.findAll();
-    return res.status(200).json({
-      data: result,
-    });
-  });
-
   router.get('/products/:id/commodities', async (req: Request, res: Response) => {
     const productId = req.params.id;
     if (!productId) {
@@ -117,85 +92,6 @@ export function configProductsRoutes(router: Router) {
     );
     return res.status(200).json({
       data: result.rows,
-    });
-  });
-
-  router.get('/products/:id', async (req: Request, res: Response) => {
-   try {
-     const productId = req.params.id;
-     if (!productId) {
-       return res.status(400).json({
-         message: 'Missing products id',
-       });
-     }
-
-     const result = await productsRepository.findById(String(productId));
-
-     if (!result) {
-       return res.status(404).json({
-         message: `Product with id ${productId} was not found`,
-       });
-     }
-
-     return res.status(200).json({
-       data: result,
-     });
-   } catch (error: any) {
-    console.log(error);
-    return res.status(200).json({
-      message: error.message,
-    });
-   }
-  });
-
-  router.put('/products/:id', async (req: Request, res: Response) => {
-    const productId = req.params.id;
-    console.log(productId)
-
-    if (!productId) {
-      return res.status(400).json({
-        message: 'Missing products id',
-      });
-    }
-
-    if (!req.body) {
-      return res.status(400).json({
-        message: 'Missing request body',
-      });
-    }
-
-    const { code, name, price } = req.body;
-    if (!code || !name || !price) {
-      return res.status(400).json({
-        message: 'Missing required fields',
-      });
-    }
-
-    const result = await productsRepository.updateById(String(productId), {
-      code,
-      name,
-      price,
-    });
-
-    return res.status(200).json({
-      message: 'UPDATED',
-      data: result,
-    });
-  });
-
-  router.delete('/products/:id', async (req: Request, res: Response) => {
-    const productId = req.params.id;
-    if (!productId) {
-      res.status(400).json({
-        message: 'Missing product id',
-      });
-    }
-
-    const result = await productsRepository.deleteById(String(productId));
-
-    return res.status(200).json({
-      message: 'DELETED',
-      data: result,
     });
   });
 
