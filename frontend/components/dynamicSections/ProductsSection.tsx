@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { ProductsList } from '../lists/ProductsList';
 import { fetchProducts } from '@/services/fetchProducts';
 import { Product } from '@/types/Product';
@@ -8,6 +8,7 @@ import { FechingState } from '@/types/FechingState';
 import { RequestStatus } from '@/types/RequestStatus';
 import { WithId } from '@/types/WithId';
 import { SearchBar } from '../SearchBar';
+import { RerenderItemsContext } from '@/contexts/RerenderItemsContext';
 
 export function ProductsSection() {
   const [fetching, setFeching] = useState<FechingState<WithId<Product>[]>>({
@@ -16,6 +17,13 @@ export function ProductsSection() {
   });
 
   const isLoading = fetching.status === RequestStatus.loading ? true : false;
+
+  const reRenderItemsContext = useContext(RerenderItemsContext);
+  if (!reRenderItemsContext) {
+    throw Error('Missing RerenderItemsContext');
+  }
+
+  const { renderItems } = reRenderItemsContext;
 
   useEffect(() => {
     async function loadProducts() {
@@ -29,7 +37,7 @@ export function ProductsSection() {
       }
     }
     loadProducts();
-  }, []);
+  }, [renderItems]);
   return (
     <div className="flex flex-col gap-[24px]">
       <SearchBar />

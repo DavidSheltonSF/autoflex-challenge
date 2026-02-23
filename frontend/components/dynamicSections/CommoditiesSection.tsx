@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { CommoditiesList } from '../lists/CommoditiesList';
 import { fetchCommodities } from '@/services/fetchCommodities';
 import { Commodity } from '@/types/Commodity';
@@ -8,6 +8,7 @@ import { FechingState } from '@/types/FechingState';
 import { RequestStatus } from '@/types/RequestStatus';
 import { WithId } from '@/types/WithId';
 import { SearchBar } from '../SearchBar';
+import { RerenderItemsContext } from '@/contexts/RerenderItemsContext';
 
 export function CommoditiesSection() {
   const [fetching, setFeching] = useState<FechingState<WithId<Commodity>[]>>({
@@ -16,6 +17,12 @@ export function CommoditiesSection() {
   });
 
   const isLoading = fetching.status === RequestStatus.loading ? true : false;
+  const reRenderItemsContext = useContext(RerenderItemsContext);
+  if (!reRenderItemsContext) {
+    throw Error('Missing RerenderItemsContext');
+  }
+
+  const { renderItems } = reRenderItemsContext;
 
   useEffect(() => {
     async function loadCommodities() {
@@ -29,7 +36,7 @@ export function CommoditiesSection() {
       }
     }
     loadCommodities();
-  }, []);
+  }, [renderItems]);
   return (
     <div className="flex flex-col gap-[24px]">
       <SearchBar />
