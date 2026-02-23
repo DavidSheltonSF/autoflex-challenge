@@ -1,14 +1,21 @@
 import { ProductsRepository } from '../../repositories/products/ProductsRepository';
+import { ProductsCommoditiesRepository } from '../../repositories/productsCommoditiesRelation/ProductsCommoditiesRepository.ts';
 import { Commodity } from '../../types/Commodity';
+import { GroupedProductsAndCommodities } from '../../types/GroupedProductsAndCommodities';
 import { Product } from '../../types/Product';
+import { ProductAndCommodity } from '../../types/ProductAndCommodity';
 import { ProductCommodityRelation } from '../../types/ProductCommodityRelation';
 import { WithId } from '../../types/WithId';
+import { getViableProducts } from '../../utils/getViableProducts';
 import { validateQuantity } from '../helper/fieldsValidators';
 import { validadeProduct } from '../helper/validateProduct';
 import { IProductService } from './IProductService';
 
 export class ProductService implements IProductService {
-  constructor(private readonly productRepository: ProductsRepository) {}
+  constructor(
+    private readonly productRepository: ProductsRepository,
+    private readonly productsCommoditiesRepository: ProductsCommoditiesRepository
+  ) {}
 
   async findAll(): Promise<WithId<Product>[]> {
     return await this.productRepository.findAll();
@@ -53,5 +60,24 @@ export class ProductService implements IProductService {
     commodityId: string
   ): Promise<WithId<ProductCommodityRelation>> {
     return this.productRepository.removeCommodity(productId, commodityId);
+  }
+
+  async findAllAvailableProducts(): Promise<ProductAndCommodity[]> {
+    const result = await this.productsCommoditiesRepository.findAllProductsAndCommodities();
+    let groupedRowsByProductIdObj: Record<string, any[]> = {};
+    result.forEach((row) => {
+      if (groupedRowsByProductIdObj[row.productId] === undefined) {
+        groupedRowsByProductIdObj[row.productId] = [];
+      }
+      groupedRowsByProductIdObj[row.productId]?.push(row);
+    });
+
+    const groupedRowsByProductId: GroupedProductsAndCommodities =
+      Object.values(groupedRowsByProductIdObj);
+    console.log(groupedRowsByProductId);
+
+    const viableProducts = getViableProducts(groupedRowsByProductId);
+
+    return viableProducts;
   }
 }

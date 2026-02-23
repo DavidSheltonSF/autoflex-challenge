@@ -1,5 +1,6 @@
 import { Commodity } from '../../types/Commodity';
 import { Product } from '../../types/Product';
+import { ProductAndCommodity } from '../../types/ProductAndCommodity';
 import { ProductCommodityRelation } from '../../types/ProductCommodityRelation';
 import { WithId } from '../../types/WithId';
 
@@ -18,4 +19,5 @@ export interface IProductService {
     productId: string,
     commodityId: string
   ) => Promise<WithId<ProductCommodityRelation>>;
+  findAllAvailableProducts: () => Promise<ProductAndCommodity[]>;
 }
