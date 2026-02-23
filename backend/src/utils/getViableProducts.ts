@@ -1,17 +1,20 @@
+import { GroupedProductsAndCommodities } from '../types/GroupedProductsAndCommodities';
+import { ProductAndCommodity } from '../types/ProductAndCommodity';
 import { calculateProductQuantityToMake } from './calculateProductQuantityToMake';
 
 // Returns only the product that can be made with the available commodities
-export function getViableProducts(data: any): any {
+export function getViableProducts(data: GroupedProductsAndCommodities): ProductAndCommodity[] {
   const products: any = [];
 
-  data.forEach((row: any) => {
-    const result = calculateProductQuantityToMake(row);
+  data.forEach((group) => {
+    const result = calculateProductQuantityToMake(group);
     if (result && result > 0) {
-      const validatedProduct = row[0];
+      const validatedProduct = group[0];
       products.push({
-        id: validatedProduct.id,
-        name: validatedProduct.name,
-        price: validatedProduct.price,
+        productId: validatedProduct?.productId,
+        productCode: validatedProduct?.productCode,
+        productName: validatedProduct?.productName,
+        price: validatedProduct?.price,
         quantity: result,
       });
     }
