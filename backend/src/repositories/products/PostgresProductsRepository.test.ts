@@ -156,6 +156,54 @@ describe('Testing PostgresProductRepository', () => {
     expect(nonExistingProduct).toBeFalsy();
   });
 
+  test('should find all product commodities', async () => {
+    const { productRepository } = mockup();
+
+    const newProduct = {
+      code: 'prod1234',
+      name: 'cadeira de ferro',
+      price: 500,
+    };
+
+    const newCommodity = {
+      code: 'com3214',
+      name: 'barra de ferro',
+      quantity: 50,
+    };
+
+    const insertQueries = {
+      product: {
+        text: 'INSERT INTO products (code, name, price) VALUES ($1, $2, $3) RETURNING id',
+        values: [newProduct.code, newProduct.name, newProduct.price],
+      },
+      commodity: {
+        text: 'INSERT INTO commodities (code, name, quantity) VALUES ($1, $2, $3) RETURNING id',
+        values: [newCommodity.code, newCommodity.name, newCommodity.quantity],
+      },
+    };
+
+    const insertProductResult = await dbConnection.query(insertQueries.product);
+    const insertCommodityResult = await dbConnection.query(insertQueries.commodity);
+
+    const productId = insertProductResult.rows[0].id;
+    const commodityId = insertCommodityResult.rows[0].id;
+
+    const insertProductCommodityQuery = {
+      text: 'INSERT INTO products_commodities (productId, commodityId, quantity) VALUES ($1, $2, $3) RETURNING *',
+      values: [productId, commodityId, newCommodity.quantity],
+    };
+
+    await dbConnection.query(insertProductCommodityQuery);
+
+    const findAllProductCommoditiesResult = await productRepository.findAllCommodities(productId);
+    const productCommodity = findAllProductCommoditiesResult[0];
+
+    expect(findAllProductCommoditiesResult.length).toBe(1);
+    expect(productCommodity?.code).toBe(newCommodity.code);
+    expect(productCommodity?.name).toBe(newCommodity.name);
+    expect(productCommodity?.quantity).toBe(newCommodity.quantity);
+  });
+
   test('should add one commodity to a product', async () => {
     const { productRepository } = mockup();
 

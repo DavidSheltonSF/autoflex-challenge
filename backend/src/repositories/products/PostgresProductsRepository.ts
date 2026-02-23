@@ -1,4 +1,5 @@
 import { PostgreHelper } from '../../database/database';
+import { Commodity } from '../../types/Commodity';
 import { Product } from '../../types/Product';
 import { ProductCommodityRelation } from '../../types/ProductCommodityRelation';
 import { WithId } from '../../types/WithId';
@@ -75,6 +76,27 @@ export class PostgresProductsRepository implements ProductsRepository {
   async checkExistence(id: string): Promise<boolean> {
     const result = await this.findById(id);
     return result !== null;
+  }
+
+  async findAllCommodities(productId: string): Promise<WithId<Commodity>[]> {
+    const result = await dbConnection.query(
+      `SELECT c.id, c.code, c.name, pc.quantity 
+      FROM products p 
+      INNER JOIN products_commodities pc ON p.id = pc.productid 
+      INNER JOIN commodities c ON c.id = pc.commodityid 
+      WHERE p.id = ${productId}`
+    );
+    const rows = result.rows;
+    const mappedResult = rows.map((row) => {
+      return {
+        id: row.id,
+        code: row.code,
+        name: row.name,
+        quantity: row.quantity,
+      };
+    });
+
+    return mappedResult;
   }
 
   async addCommodity(

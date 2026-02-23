@@ -11,6 +11,7 @@ export class ProductsRepositoryMock implements ProductsRepository {
   checkExistenceParam: { id: string } | null = null;
   addCommodityParam: { productCommodityRelation: ProductCommodityRelation } | null = null;
   removeCommodityParam: { productId: string; commodityId: string } | null = null;
+  findAllCommoditiesWasCalled: boolean = false;
 
   async findAll() {
     this.findAllWasCalled = true;
@@ -38,6 +39,11 @@ export class ProductsRepositoryMock implements ProductsRepository {
   async checkExistence(id: string) {
     this.checkExistenceParam = { id };
     return true;
+  }
+
+  async findAllCommodities() {
+    this.findAllCommoditiesWasCalled = true;
+    return [{ id: '8', code: 'comm1234', name: 'barra de ferro', quantity: 80 }];
   }
 
   async addCommodity(productCommodityRelation: ProductCommodityRelation) {

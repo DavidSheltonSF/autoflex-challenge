@@ -1,3 +1,4 @@
+import { Commodity } from '../../types/Commodity';
 import { Product } from '../../types/Product';
 import { ProductCommodityRelation } from '../../types/ProductCommodityRelation';
 import { WithId } from '../../types/WithId';
@@ -9,6 +10,7 @@ export interface ProductsRepository {
   updateById: (id: string, product: Product) => Promise<WithId<Product>>;
   deleteById: (id: string) => Promise<WithId<Product>>;
   checkExistence: (id: string) => Promise<boolean>;
+  findAllCommodities: (productId: string) => Promise<WithId<Commodity>[]>;
   addCommodity: (
     productCommodityRelation: ProductCommodityRelation
   ) => Promise<WithId<ProductCommodityRelation>>;
