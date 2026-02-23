@@ -5,12 +5,14 @@ import { HttpRequest } from '../types/HttpRequest';
 import { ProductsRepositoryMock } from '../../tests/mocks/ProductsRepositoryMock';
 import { CommoditiesRepositoryMock } from '../../tests/mocks/CommoditiesRepositoryMock';
 import { CommoditiesService } from '../../services/commodities/CommoditiesService';
+import { ProductsCommoditiesRepositoryMock } from '../../tests/mocks/ProductsCommoditiesRepositoryMock';
 
 describe('Testing ProductsController', () => {
   function mockup() {
     const productsRepository = new ProductsRepositoryMock();
     const commoditiesRepository = new CommoditiesRepositoryMock();
-    const productsService = new ProductService(productsRepository);
+    const productsCommoditiesRepository = new ProductsCommoditiesRepositoryMock();
+    const productsService = new ProductService(productsRepository, productsCommoditiesRepository);
     const commoditiesService = new CommoditiesService(commoditiesRepository);
     const productsController = new ProductsController(productsService, commoditiesService);
 
@@ -153,7 +155,6 @@ describe('Testing ProductsController', () => {
     expect(response.status).toBe(200);
     expect(productsRepository.deleteParam?.id).toBe(id);
   });
-
 
   test('should call productsRepository.findAllCommodities() with the productId provided and return OK (200)', async () => {
     const { productsController, productsRepository } = mockup();

@@ -2,11 +2,13 @@ import { describe, expect, test } from '@jest/globals';
 import { ProductsRepositoryMock } from '../../tests/mocks/ProductsRepositoryMock';
 import { ProductService } from './ProductService';
 import { InvalidCodeError } from '../errors/InvalidCodeError';
+import { ProductsCommoditiesRepositoryMock } from '../../tests/mocks/ProductsCommoditiesRepositoryMock';
 
 describe('Testing ProductService', () => {
   function mockup() {
     const productRepository = new ProductsRepositoryMock();
-    const productService = new ProductService(productRepository);
+    const productsCommoditiesRepository = new ProductsCommoditiesRepositoryMock();
+    const productService = new ProductService(productRepository, productsCommoditiesRepository);
 
     return {
       productRepository,
