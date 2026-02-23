@@ -153,4 +153,17 @@ describe('Testing ProductsController', () => {
     expect(response.status).toBe(200);
     expect(productsRepository.deleteParam?.id).toBe(id);
   });
+
+
+  test('should call productsRepository.findAllCommodities() with the productId provided and return OK (200)', async () => {
+    const { productsController, productsRepository } = mockup();
+    const productId = '22';
+    const httpRequest: HttpRequest = {
+      params: { productId },
+    };
+    const response = await productsController.findAllCommodities(httpRequest);
+
+    expect(productsRepository.findAllCommoditiesParam?.productId).toBe(productId);
+    expect(response.status).toBe(200);
+  });
 });

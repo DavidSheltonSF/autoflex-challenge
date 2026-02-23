@@ -14,6 +14,7 @@ import {
   deleteByIdResponse,
   updateByIdResponse,
   addCommodityResponse,
+  findAllCommoditiesResponse,
 } from './responses';
 
 export class ProductsController implements IProductsController {
@@ -77,7 +78,6 @@ export class ProductsController implements IProductsController {
       const { id } = httpRequest.params;
       const { body } = httpRequest;
 
-      console.log(id);
       if (!id) {
         return HttpResponseFactory.makeBadRequest({ message: 'Missing product id' });
       }
@@ -126,7 +126,6 @@ export class ProductsController implements IProductsController {
     }
 
     const exists = await this.productService.checkExistence(id);
-    console.log(exists);
     if (!exists) {
       return HttpResponseFactory.makeNotFound({
         message: `Product with id '${id} was not found`,
@@ -134,6 +133,16 @@ export class ProductsController implements IProductsController {
     }
     const result = await this.productService.deleteById(id);
 
+    return HttpResponseFactory.makeOk({ data: result });
+  };
+
+  findAllCommodities = async (httpRequest: HttpRequest): Promise<findAllCommoditiesResponse> => {
+    const { id } = httpRequest.params;
+      if (!id) {
+        return HttpResponseFactory.makeBadRequest({ message: 'Missing product id' });
+      }
+
+    const result = await this.productService.findAllCommodities(id);
     return HttpResponseFactory.makeOk({ data: result });
   };
 
