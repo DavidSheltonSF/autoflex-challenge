@@ -15,7 +15,7 @@ export function getViableProducts(data: GroupedProductsAndCommodities): ProductA
         productCode: validatedProduct?.productCode,
         productName: validatedProduct?.productName,
         price: validatedProduct?.price,
-        quantity: result,
+        commodityQuantity: result,
       });
     }
   });
