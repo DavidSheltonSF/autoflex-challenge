@@ -32,7 +32,7 @@ export const dbConnection = PostgreHelper.getInstance();
 (async () => {
   try {
     await dbConnection.connect();
-    await dbConnection.resetTables();
+    // await dbConnection.resetTables();
     console.log('Connected');
   } catch (error: any) {
     console.log(error);
