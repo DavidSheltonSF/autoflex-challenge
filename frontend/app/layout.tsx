@@ -12,6 +12,7 @@ import { DeleteCommodityModal } from '@/components/modals/DeleteCommodityModal';
 import { ProductModal } from '@/components/modals/ProductModal';
 import { Navbar } from '@/components/Navbar';
 import { AvailableProductsContainer } from '@/components/AvailableProductsContainer';
+import { RerenderItemsProvider } from '@/contexts/RerenderItemsProvider';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -36,18 +37,20 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <ModalsProvider>
-          <UpdateProductModal />
-          <DeleteProductModal />
-          <AddProductModal />
-          <AddCommodityModal />
-          <UpdateCommodityModal />
-          <DeleteCommodityModal />
-          <ProductModal />
-          <Navbar/>
-          <div>{children}</div>
-          <AvailableProductsContainer/>
-        </ModalsProvider>
+        <RerenderItemsProvider>
+          <ModalsProvider>
+            <UpdateProductModal />
+            <DeleteProductModal />
+            <AddProductModal />
+            <AddCommodityModal />
+            <UpdateCommodityModal />
+            <DeleteCommodityModal />
+            <ProductModal />
+            <Navbar />
+            <div>{children}</div>
+            <AvailableProductsContainer />
+          </ModalsProvider>
+        </RerenderItemsProvider>
       </body>
     </html>
   );
