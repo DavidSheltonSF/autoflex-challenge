@@ -44,7 +44,7 @@ export class ProductService implements IProductService {
   }
 
   async findAllCommodities(productId: string): Promise<WithId<Commodity>[]> {
-    return this.productRepository.findAllCommodities(productId);
+    return this.productsCommoditiesRepository.findAllCommodities(productId);
   }
 
   async addCommodity(
@@ -52,14 +52,14 @@ export class ProductService implements IProductService {
   ): Promise<WithId<ProductCommodityRelation>> {
     const { quantity } = productCommodityRelation;
     validateQuantity(quantity);
-    return this.productRepository.addCommodity(productCommodityRelation);
+    return this.productsCommoditiesRepository.createCommodity(productCommodityRelation);
   }
 
   async removeCommodity(
     productId: string,
     commodityId: string
   ): Promise<WithId<ProductCommodityRelation>> {
-    return this.productRepository.removeCommodity(productId, commodityId);
+    return this.productsCommoditiesRepository.deleteCommodity(productId, commodityId);
   }
 
   async findAllAvailableProducts(): Promise<ProductAndCommodity[]> {
