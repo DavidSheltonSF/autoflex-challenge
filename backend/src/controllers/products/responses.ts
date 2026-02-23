@@ -1,5 +1,6 @@
 import { Commodity } from '../../types/Commodity';
 import { Product } from '../../types/Product';
+import { ProductAndCommodity } from '../../types/ProductAndCommodity';
 import { ProductCommodityRelation } from '../../types/ProductCommodityRelation';
 import { WithId } from '../../types/WithId';
 import { HttpResponse } from '../types/HttpResponse';
@@ -13,4 +14,7 @@ export type findAllCommoditiesResponse = HttpResponse<WithId<Commodity>[]>;
 export type addCommodityResponse = HttpResponse<
   WithId<ProductCommodityRelation> | { message: string }
 >;
-export type removeCommodityResponse = HttpResponse<WithId<ProductCommodityRelation> | { message: string }>;
+export type removeCommodityResponse = HttpResponse<
+  WithId<ProductCommodityRelation> | { message: string }
+>;
+export type findAllAvailableProductsResponse = HttpResponse<ProductAndCommodity[]>;

@@ -15,6 +15,7 @@ import {
   updateByIdResponse,
   addCommodityResponse,
   findAllCommoditiesResponse,
+  findAllAvailableProductsResponse,
 } from './responses';
 
 export class ProductsController implements IProductsController {
@@ -138,9 +139,9 @@ export class ProductsController implements IProductsController {
 
   findAllCommodities = async (httpRequest: HttpRequest): Promise<findAllCommoditiesResponse> => {
     const { id } = httpRequest.params;
-      if (!id) {
-        return HttpResponseFactory.makeBadRequest({ message: 'Missing product id' });
-      }
+    if (!id) {
+      return HttpResponseFactory.makeBadRequest({ message: 'Missing product id' });
+    }
 
     const result = await this.productService.findAllCommodities(id);
     return HttpResponseFactory.makeOk({ data: result });
@@ -224,5 +225,12 @@ export class ProductsController implements IProductsController {
       console.log(error);
       return HttpResponseFactory.makeServerError({ message: 'Something went wrong in the server' });
     }
+  };
+
+  findAllAvailableProducts = async (
+    httpRequest: HttpRequest
+  ): Promise<findAllAvailableProductsResponse> => {
+    const result = await this.productService.findAllAvailableProducts();
+    return HttpResponseFactory.makeOk({ data: result });
   };
 }

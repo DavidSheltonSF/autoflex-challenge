@@ -3,6 +3,7 @@ import {
   addCommodityResponse,
   createResponse,
   deleteByIdResponse,
+  findAllAvailableProductsResponse,
   findAllCommoditiesResponse,
   findAllResponse,
   findByIdResponse,
@@ -19,4 +20,5 @@ export interface IProductsController {
   findAllCommodities: (httpRequest: HttpRequest) => Promise<findAllCommoditiesResponse>;
   addCommodity: (httpRequest: HttpRequest) => Promise<addCommodityResponse>;
   removeCommodity: (httpRequest: HttpRequest) => Promise<removeCommodityResponse>;
+  findAllAvailableProducts: (httpRequest: HttpRequest) => Promise<findAllAvailableProductsResponse>;
 }
